@@ -10,35 +10,40 @@ import UIKit
 
 class PeopleViewController: UIViewController {
 
+    // MARK: - Variables
+    // variables from the storyboard
     @IBOutlet weak var detailsSegmentView: UIView!
     @IBOutlet weak var bookSegmentView: UIView!
     @IBOutlet weak var segmentController: UISegmentedControl!
     @IBOutlet weak var profilePicture: UIImageView!
     
-    var tabBarIndex: Int?
+    // the user that is currently logged on
+    var loggedOnUser: User?
     
-    var user: User?
     
-    
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        // Set the title of the people tab
         self.tabBarItem = UITabBarItem(title: "PEOPLE", image: nil, selectedImage: nil)
-        self.profilePicture.image = UIImage(named: user!.userProfilePicture)
+        
+        // Set the profile picture and edit the photo
+        self.profilePicture.image = UIImage(named: (loggedOnUser?.userProfilePicture)!)
         self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
         self.profilePicture.clipsToBounds = true;
         self.profilePicture.layer.borderWidth = 1;
-        // Do any additional setup after loading the view.
     }
     
-    
+    // Change depending on what segment
     @IBAction func onSegmentChange(_ sender: Any) {
         switch  segmentController.selectedSegmentIndex {
+        // If segment is the details view
         case 0:
             detailsSegmentView.isHidden = false
             bookSegmentView.isHidden = true
             break
+        // If segment is books view
         case 1:
             detailsSegmentView.isHidden = true
             bookSegmentView.isHidden = false
@@ -48,18 +53,18 @@ class PeopleViewController: UIViewController {
         }
     }
     
-    
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+        // check the segue and go to the detailsSegmentViewController
         if segue.identifier == "peopleDetailsProfileSegue" {
             let uiView = segue.destination as! DetailsSegementViewController
             uiView.selectView = "People"
         }
+        
+        if segue.identifier == "peopleBookSegementSegue" {
+            let uiView = segue.destination as! BookSegmentViewController
+            uiView.selectView = "People"
+        }
     }
-    
-
 }

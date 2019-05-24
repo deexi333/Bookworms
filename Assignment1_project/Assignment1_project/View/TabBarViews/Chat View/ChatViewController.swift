@@ -10,12 +10,16 @@ import UIKit
 
 class ChatViewController: UIViewController {
     
-    var user: User?
+    // MARK: - Variables
+    var loggedOnUser: User?
 
+    
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // set the title of the chat tab
         self.tabBarItem = UITabBarItem(title: "CHAT", image: nil, selectedImage: nil)
-        // Do any additional setup after loading the view.
     }
     
 

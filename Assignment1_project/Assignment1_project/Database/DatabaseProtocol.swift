@@ -23,8 +23,9 @@ enum ListenerType {
 
 protocol DatabaseListener: AnyObject {
     var listenerType: ListenerType {get set}
-    func onUserChange(change: DatabaseChange, user: [User])
-    func onBookChange(change: DatabaseChange, book: [Book])
+    func onUserChange(change: DatabaseChange, users: [User])
+    func onBookChange(change: DatabaseChange, books: [Book])
+    func onGenreChange(change: DatabaseChange, genres: [Genre])
 }
 
 protocol DatabaseProtocol: AnyObject {
@@ -32,12 +33,24 @@ protocol DatabaseProtocol: AnyObject {
     func addUser(userFirstName: String, userLastName: String, userEmail: String, userPassword: String) -> User
     func updateUserBio(userBio: String, userEmail: String)
     func updateUserProfilePicture(userProfilePicture: String, userEmail: String)
-    func checkUser(email: String) -> Bool
-    func getUsers() -> [User]
     
+//    // Remove
+//    func checkUser(email: String) -> Bool
+//    func getUsers() -> [User]
+//
     // Book
     func deleteBook(book: Book, user: User)
+    func addBookToUser(userEmail: String, bookID: String)
     
+//    // Remove
+//    func getBooks() -> [Book]
+//    func getUserBooks(currentUser: User) -> [Book]
+//    func getInverseUserBooks(currentUser: User) -> [Book]
+    
+    // Genres
+//    func getBookGenres(currentBook: Book) -> [Genre]
+    
+    // Listeners
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)
 }

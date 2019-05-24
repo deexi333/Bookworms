@@ -13,7 +13,8 @@ class Genre: NSObject {
     var genreId: String?
     var genreType: String?
     
-    init( genreType: String) {
+    init(genreId: String, genreType: String) {
         self.genreType = genreType
+        self.genreId = genreId
     }
 }

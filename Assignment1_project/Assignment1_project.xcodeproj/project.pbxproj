@@ -11,9 +11,7 @@
 		C120CDC2227F2D1D00CC7E02 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDC1227F2D1D00CC7E02 /* PeopleViewController.swift */; };
 		C120CDC4227F2D6700CC7E02 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDC3227F2D6700CC7E02 /* ChatViewController.swift */; };
 		C120CDC6227F2DE700CC7E02 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDC5227F2DE700CC7E02 /* ProfileViewController.swift */; };
-		C120CDC8227F33F900CC7E02 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDC7227F33F900CC7E02 /* ProfileView.swift */; };
 		C120CDCE227F390800CC7E02 /* DetailsSegementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDCD227F390800CC7E02 /* DetailsSegementViewController.swift */; };
-		C120CDD0227F423000CC7E02 /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDCF227F423000CC7E02 /* AddBookViewController.swift */; };
 		C120CDD2227F425800CC7E02 /* BookDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDD1227F425800CC7E02 /* BookDetailViewController.swift */; };
 		C120CDD7227F5A4400CC7E02 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDD6227F5A4400CC7E02 /* User.swift */; };
 		C120CDD9227F5A5E00CC7E02 /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDD8227F5A5E00CC7E02 /* Book.swift */; };
@@ -22,8 +20,9 @@
 		C120CDE1227FDB5B00CC7E02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C120CDE0227FDB5B00CC7E02 /* GoogleService-Info.plist */; };
 		C120CDE3227FDCB000CC7E02 /* DatabaseProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDE2227FDCB000CC7E02 /* DatabaseProtocol.swift */; };
 		C120CDE5227FDFA900CC7E02 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDE4227FDFA900CC7E02 /* FirebaseController.swift */; };
+		C137E82E2293EE0000F2C271 /* BookSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C137E82D2293EE0000F2C271 /* BookSegmentViewController.swift */; };
+		C137E8342296587100F2C271 /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C137E8332296587100F2C271 /* AddBookViewController.swift */; };
 		C1C12F1F228C6C5100FE4D16 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C12F1E228C6C5100FE4D16 /* BookTableViewCell.swift */; };
-		C1C12F21228C725B00FE4D16 /* BookSegmentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C12F20228C725B00FE4D16 /* BookSegmentTableViewController.swift */; };
 		C1D545F9227F1F8F00A89172 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D545F8227F1F8F00A89172 /* AppDelegate.swift */; };
 		C1D545FE227F1F8F00A89172 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1D545FC227F1F8F00A89172 /* Main.storyboard */; };
 		C1D54600227F1F9000A89172 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C1D545FF227F1F9000A89172 /* Assets.xcassets */; };
@@ -42,9 +41,7 @@
 		C120CDC1227F2D1D00CC7E02 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		C120CDC3227F2D6700CC7E02 /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		C120CDC5227F2DE700CC7E02 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		C120CDC7227F33F900CC7E02 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		C120CDCD227F390800CC7E02 /* DetailsSegementViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsSegementViewController.swift; sourceTree = "<group>"; };
-		C120CDCF227F423000CC7E02 /* AddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookViewController.swift; sourceTree = "<group>"; };
 		C120CDD1227F425800CC7E02 /* BookDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookDetailViewController.swift; sourceTree = "<group>"; };
 		C120CDD6227F5A4400CC7E02 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C120CDD8227F5A5E00CC7E02 /* Book.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
@@ -53,8 +50,9 @@
 		C120CDE0227FDB5B00CC7E02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C120CDE2227FDCB000CC7E02 /* DatabaseProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseProtocol.swift; sourceTree = "<group>"; };
 		C120CDE4227FDFA900CC7E02 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
+		C137E82D2293EE0000F2C271 /* BookSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSegmentViewController.swift; sourceTree = "<group>"; };
+		C137E8332296587100F2C271 /* AddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookViewController.swift; sourceTree = "<group>"; };
 		C1C12F1E228C6C5100FE4D16 /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
-		C1C12F20228C725B00FE4D16 /* BookSegmentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSegmentTableViewController.swift; sourceTree = "<group>"; };
 		C1D545F5227F1F8F00A89172 /* Assignment1_project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment1_project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D545F8227F1F8F00A89172 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C1D545FD227F1F8F00A89172 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -83,15 +81,9 @@
 		C120CDC0227F2D0100CC7E02 /* TabBarViews */ = {
 			isa = PBXGroup;
 			children = (
-				C120CDC1227F2D1D00CC7E02 /* PeopleViewController.swift */,
-				C120CDC3227F2D6700CC7E02 /* ChatViewController.swift */,
-				C120CDC5227F2DE700CC7E02 /* ProfileViewController.swift */,
-				C120CDC7227F33F900CC7E02 /* ProfileView.swift */,
-				C120CDCD227F390800CC7E02 /* DetailsSegementViewController.swift */,
-				C120CDCF227F423000CC7E02 /* AddBookViewController.swift */,
-				C120CDD1227F425800CC7E02 /* BookDetailViewController.swift */,
-				C1C12F1E228C6C5100FE4D16 /* BookTableViewCell.swift */,
-				C1C12F20228C725B00FE4D16 /* BookSegmentTableViewController.swift */,
+				C137E8312293EE9D00F2C271 /* Chat View */,
+				C137E8302293EE9600F2C271 /* Profile View */,
+				C137E82F2293EE8E00F2C271 /* People View */,
 			);
 			path = TabBarViews;
 			sourceTree = "<group>";
@@ -122,6 +114,43 @@
 				C120CDE0227FDB5B00CC7E02 /* GoogleService-Info.plist */,
 			);
 			path = FirebaseGoogleFile;
+			sourceTree = "<group>";
+		};
+		C137E82F2293EE8E00F2C271 /* People View */ = {
+			isa = PBXGroup;
+			children = (
+				C120CDC1227F2D1D00CC7E02 /* PeopleViewController.swift */,
+			);
+			path = "People View";
+			sourceTree = "<group>";
+		};
+		C137E8302293EE9600F2C271 /* Profile View */ = {
+			isa = PBXGroup;
+			children = (
+				C137E82D2293EE0000F2C271 /* BookSegmentViewController.swift */,
+				C137E83222950C5C00F2C271 /* Book Related */,
+				C120CDC5227F2DE700CC7E02 /* ProfileViewController.swift */,
+				C120CDCD227F390800CC7E02 /* DetailsSegementViewController.swift */,
+			);
+			path = "Profile View";
+			sourceTree = "<group>";
+		};
+		C137E8312293EE9D00F2C271 /* Chat View */ = {
+			isa = PBXGroup;
+			children = (
+				C120CDC3227F2D6700CC7E02 /* ChatViewController.swift */,
+			);
+			path = "Chat View";
+			sourceTree = "<group>";
+		};
+		C137E83222950C5C00F2C271 /* Book Related */ = {
+			isa = PBXGroup;
+			children = (
+				C1C12F1E228C6C5100FE4D16 /* BookTableViewCell.swift */,
+				C120CDD1227F425800CC7E02 /* BookDetailViewController.swift */,
+				C137E8332296587100F2C271 /* AddBookViewController.swift */,
+			);
+			path = "Book Related";
 			sourceTree = "<group>";
 		};
 		C1D545EC227F1F8F00A89172 = {
@@ -341,14 +370,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1C12F21228C725B00FE4D16 /* BookSegmentTableViewController.swift in Sources */,
 				C120CDC6227F2DE700CC7E02 /* ProfileViewController.swift in Sources */,
-				C120CDD0227F423000CC7E02 /* AddBookViewController.swift in Sources */,
+				C137E82E2293EE0000F2C271 /* BookSegmentViewController.swift in Sources */,
 				C120CDDE227FD9F200CC7E02 /* MulticastDelegate.swift in Sources */,
 				C1D54613227F21B300A89172 /* SignUpViewController.swift in Sources */,
 				C120CDCE227F390800CC7E02 /* DetailsSegementViewController.swift in Sources */,
 				D86202272288F6BB003A2E25 /* AddUserDelegate.swift in Sources */,
 				C120CDD2227F425800CC7E02 /* BookDetailViewController.swift in Sources */,
+				C137E8342296587100F2C271 /* AddBookViewController.swift in Sources */,
 				C120CDC2227F2D1D00CC7E02 /* PeopleViewController.swift in Sources */,
 				C1C12F1F228C6C5100FE4D16 /* BookTableViewCell.swift in Sources */,
 				C1D54611227F219700A89172 /* TitlePageViewController.swift in Sources */,
@@ -356,7 +385,6 @@
 				C120CDE3227FDCB000CC7E02 /* DatabaseProtocol.swift in Sources */,
 				C120CDC4227F2D6700CC7E02 /* ChatViewController.swift in Sources */,
 				C120CDD7227F5A4400CC7E02 /* User.swift in Sources */,
-				C120CDC8227F33F900CC7E02 /* ProfileView.swift in Sources */,
 				C120CDD9227F5A5E00CC7E02 /* Book.swift in Sources */,
 				C1D545F9227F1F8F00A89172 /* AppDelegate.swift in Sources */,
 				C120CDDB227FB27C00CC7E02 /* Genre.swift in Sources */,
@@ -507,6 +535,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VVZM29HVV2;
 				INFOPLIST_FILE = Assignment1_project/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -525,6 +554,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VVZM29HVV2;
 				INFOPLIST_FILE = Assignment1_project/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

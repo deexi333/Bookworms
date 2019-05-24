@@ -55,6 +55,70 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
             self.parseUserSnapshot(snapshot: querySnapshot!)
         }
+        
+        booksRef = database.collection("book")
+        booksRef?.addSnapshotListener { querySnapshot, error in
+            guard (querySnapshot?.documents) != nil else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            self.parseBookSnapshot(snapshot: querySnapshot!)
+        }
+        
+        genresRef = database.collection("genre")
+        genresRef?.addSnapshotListener { querySnapshot, error in
+            guard (querySnapshot?.documents) != nil else {
+                print("Error fetching documents: \(error!)")
+                return
+            }
+            self.parseGenreSnapshot(snapshot: querySnapshot!)
+        }
+    }
+    
+    func parseBookSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach { change in
+            let documentRef = change.document.documentID
+            let bookAuthor = change.document.data()["bookAuthor"] as! String
+            let bookDescription = change.document.data()["bookDescription"] as! String
+            let bookName = change.document.data()["bookName"] as! String
+            
+            var bookGenre: [String] = []
+            
+            for genre in change.document.data()["bookGenres"] as! [String] {
+                print(genre)
+                bookGenre.append(genre)
+            }
+            
+            if change.type == .added {
+                print("New Book: \(change.document.data())")
+                let newBook = Book(bookID: documentRef, bookAuthor: bookAuthor, bookDescription: bookDescription, bookGenre: bookGenre, bookName: bookName)
+                bookList.append(newBook)
+            }
+            
+            if change.type == .modified {
+                print("Updated Book: \(change.document.data())")
+                let index = getBookIndexByID(reference: documentRef)!
+                bookList[index].bookID = documentRef
+                bookList[index].bookAuthor = bookAuthor
+                bookList[index].bookDescription = bookDescription
+                bookList[index].bookGenre = bookGenre
+                bookList[index].bookName = bookName
+            }
+            
+            if change.type == .removed {
+                print("Updated Book: \(change.document.data())")
+                if let index = getBookIndexByID(reference: documentRef) {
+                    bookList.remove(at: index)
+                }
+            }
+        }
+        
+        listeners.invoke { (listener) in
+            if listener.listenerType == ListenerType.book || listener.listenerType == ListenerType.all {
+                listener.onBookChange(change: .update, books: bookList)
+            }
+        }
+        
     }
     
     func parseUserSnapshot(snapshot: QuerySnapshot) {
@@ -65,10 +129,19 @@ class FirebaseController: NSObject, DatabaseProtocol {
             let userEmail = change.document.data()["userEmail"] as! String
             let userBio = change.document.data()["userBio"] as! String
             let userPassword = change.document.data()["userPassword"] as! String
-            let userBooks = change.document.data()["userBooks"] as! [String]
-            let userFriends = change.document.data()["userFriends"] as! [String]
-            //let userProfilePicture = change.document.data()["userProfilePicture"] as! String
-            let userProfilePicture = "defaultProfilePicture"
+            let userProfilePicture = change.document.data()["userProfilePicture"] as! String
+            //let userProfilePicture = "defaultProfilePicture"
+            var userBooks: [String] = []
+            
+            for book in change.document.data()["userBooks"] as! [String] {
+                userBooks.append(book)
+            }
+            
+            var userFriends: [String] = []
+            
+            for friend in change.document.data()["userFriends"] as! [String] {
+                userFriends.append(friend)
+            }
             
             if change.type == .added {
                 print("New user: \(change.document.data())")
@@ -86,8 +159,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 userList[index].userEmail = userEmail
                 userList[index].userBio = userBio
                 userList[index].userPassword = userPassword
-                userList[index].userBooks = [String]()
-                userList[index].userFriends = [String]()
+                userList[index].userBooks = userBooks
+                userList[index].userFriends = userFriends
                 userList[index].userProfilePicture = userProfilePicture
             }
             
@@ -101,9 +174,41 @@ class FirebaseController: NSObject, DatabaseProtocol {
         
         listeners.invoke { (listener) in
             if listener.listenerType == ListenerType.user || listener.listenerType == ListenerType.all {
-                listener.onUserChange(change: .update, user: userList)
+                listener.onUserChange(change: .update, users: userList)
+            }
+        }
+    }
+    
+    func parseGenreSnapshot(snapshot: QuerySnapshot) {
+        snapshot.documentChanges.forEach { change in
+            let documentRef = change.document.documentID
+            let genreType = change.document.data()["genreType"] as! String
+            
+            if change.type == .added {
+                print("New Genre: \(change.document.data())")
+                let newGenre = Genre(genreId: documentRef, genreType: genreType)
+                genreList.append(newGenre)
             }
             
+            if change.type == .modified {
+                print("Updated Genre: \(change.document.data())")
+                let index = getGenreIndexByID(reference: documentRef)!
+                genreList[index].genreId = documentRef
+                genreList[index].genreType = genreType
+            }
+            
+            if change.type == .removed {
+                print("Removed User: \(change.document.data())")
+                if let index = getGenreIndexByID(reference: documentRef) {
+                    userList.remove(at: index)
+                }
+            }
+        }
+        
+        listeners.invoke { (listener) in
+            if listener.listenerType == ListenerType.book || listener.listenerType == ListenerType.all {
+                listener.onGenreChange(change: .update, genres: genreList)
+            }
         }
     }
     
@@ -115,6 +220,24 @@ class FirebaseController: NSObject, DatabaseProtocol {
         }
         return nil
     }
+        
+    func getBookIndexByID(reference: String) -> Int? {
+        for book in bookList {
+            if (book.bookID == reference) {
+                return bookList.firstIndex(of: book)
+            }
+        }
+        return nil
+    }
+    
+    func getGenreIndexByID(reference: String) -> Int? {
+        for genre in genreList {
+            if (genre.genreId == reference) {
+                return genreList.firstIndex(of: genre)
+            }
+        }
+        return nil
+    }
     
     func addUser(userFirstName: String, userLastName: String, userEmail: String, userPassword: String) -> User {
         let userFriends = [String]()
@@ -122,11 +245,27 @@ class FirebaseController: NSObject, DatabaseProtocol {
         let userBio = "Enter a bio..."
         let userProfilePicture = "defaultProfilePicture"
         
-        let _ = usersRef?.document(String(userEmail)).setData(["userFirstName": userFirstName, "userLastName": userLastName, "userEmail": userEmail, "userPassword": userPassword, "userBooks": userBooks, "userFriends": userFriends, "userBio": userBio, "userProfilePciture": userProfilePicture])
+        let _ = usersRef?.document(String(userEmail)).setData(["userFirstName": userFirstName, "userLastName": userLastName, "userEmail": userEmail, "userPassword": userPassword, "userBooks": userBooks, "userFriends": userFriends, "userBio": userBio, "userProfilePicture": userProfilePicture])
         
         let user = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userPassword: userPassword, userBio: userBio, userProfilePicture: userProfilePicture)
         
         return user
+    }
+    
+    func addBookToUser(userEmail: String, bookID: String) {
+        var books: [String] = []
+        
+        for user in userList {
+            if user.userEmail == userEmail {
+                for bookID in user.userBooks {
+                    books.append(bookID)
+                }
+            }
+        }
+        
+        books.append(bookID)
+        
+        let _ = usersRef?.document(String(userEmail)).updateData(["userBooks": books])
     }
     
     func updateUserBio(userBio: String, userEmail: String) {
@@ -148,21 +287,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             }
         }
     }
-    
-    func checkUser(email: String) -> Bool {
-        for user in userList {
-            if user.userEmail == email {
-                return true
-            }
-        }
-        
-        return false
-    }
-    
-    func getUsers() -> [User] {
-        return userList
-    }
-    
+
     func deleteBook(book: Book, user: User) {
         
         for u in userList {
@@ -181,7 +306,15 @@ class FirebaseController: NSObject, DatabaseProtocol {
         listeners.addDelegate(listener)
         
         if listener.listenerType == ListenerType.user || listener.listenerType == ListenerType.all {
-            listener.onUserChange(change: .update, user: userList)
+            listener.onUserChange(change: .update, users: userList)
+        }
+        
+        if listener.listenerType == ListenerType.book || listener.listenerType == ListenerType.all {
+            listener.onBookChange(change: .update, books: bookList)
+        }
+        
+        if listener.listenerType == ListenerType.genre || listener.listenerType == ListenerType.all {
+            listener.onGenreChange(change: .update, genres: genreList)
         }
     }
     
