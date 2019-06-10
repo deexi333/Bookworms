@@ -9,14 +9,24 @@
 import UIKit
 
 class BookDetailViewController: UIViewController, DatabaseListener {
+    func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {
+        
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages: [Message]) {
+        
+    }
+    
     
     // MARK: - Variables
     var currentBook: Book?
     var loggedOnUser: User?
+    var trackUser: User?
     var addBook: Bool?
     weak var databaseController: DatabaseProtocol?
     
     // Linked to storyboard variables
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
@@ -31,6 +41,10 @@ class BookDetailViewController: UIViewController, DatabaseListener {
         for user in users {
             if loggedOnUser?.userEmail == user.userEmail {
                 loggedOnUser = user
+            }
+            
+            if trackUser?.userEmail == user.userEmail {
+                trackUser = user
             }
         }
     }
@@ -47,6 +61,18 @@ class BookDetailViewController: UIViewController, DatabaseListener {
     
     func onGenreChange(change: DatabaseChange, genres: [Genre]) {
         allGenres = genres
+        
+        var genresDescription = ""
+        
+        for genreID in currentBook!.bookGenres {
+            for genre in allGenres {
+                if genre.genreID == genreID {
+                    genresDescription += "\(String(genre.genreType!))\n"
+                }
+            }
+        }
+        
+        genresLabel.text = genresDescription
     }
     
     @IBAction func addBookAction(_ sender: Any) {
@@ -67,12 +93,15 @@ class BookDetailViewController: UIViewController, DatabaseListener {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // use the database controller
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        
         databaseController = appDelegate.databaseController
         
-        navigationItem.title = currentBook!.bookName
+        navigationItem.title = "Chosen Book"
+        
+        titleLabel.text = currentBook!.bookName
+        
         descriptionLabel.text = currentBook!.bookDescription
         
         authorLabel.text = currentBook!.bookAuthor
@@ -83,14 +112,15 @@ class BookDetailViewController: UIViewController, DatabaseListener {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
     }
-    */
+    
 
 }

@@ -9,6 +9,14 @@
 import UIKit
 
 class TitlePageViewController: UIViewController, DatabaseListener {
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
+        
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
+        
+    }
+    
     
     // MARK: - Variables
     // Database related variables
@@ -93,7 +101,6 @@ class TitlePageViewController: UIViewController, DatabaseListener {
             var isRegisteredUser: Bool  = false
             
             for user in allUsers {
-                print("\(user.userEmail)")
                 if user.userEmail == email {
                     isRegisteredUser = true
                 }

@@ -9,6 +9,14 @@
 import UIKit
 
 class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
+        
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
+        
+    }
+    
 
     // MARK: - Variables
     // Database controller
@@ -107,12 +115,14 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         super.viewWillAppear(animated)
         // Adds listener
         databaseController?.addListener(listener: self)
+        self.allBooksTableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Removes listener
         databaseController?.removeListener(listener: self)
+        self.allBooksTableView.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -138,11 +148,6 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         return bookCell
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete && indexPath.section == SECTION_BOOKS {
-            databaseController!.deleteBook(book: filteredBooks[indexPath.row], user: loggedOnUser!)
-        }
-    }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // checks whether or not the row is a task
@@ -152,7 +157,6 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         return false
     }
     
-
     
     // MARK: - Navigation
 

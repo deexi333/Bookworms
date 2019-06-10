@@ -9,6 +9,14 @@
 import UIKit
 
 class DetailsSegementViewController: UIViewController, UITextViewDelegate, DatabaseListener {
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
+        
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
+        
+    }
+    
     
     // MARK: - Variables
     // The listener
@@ -19,9 +27,9 @@ class DetailsSegementViewController: UIViewController, UITextViewDelegate, Datab
     
     var selectView: String?         // the view to check whether it is profile and people view controller
     var loggedOnUser: User?         // currently logged on user
+    var trackUser: User?            // Users potential friend
     
     var allUsers: [User] = []       // All the users in the database
-    var userTrack = 0               // tracking the users that have been displayed in the people tab
     
     // Variables from the story board
     @IBOutlet weak var userNameLabel: UILabel!
@@ -40,18 +48,9 @@ class DetailsSegementViewController: UIViewController, UITextViewDelegate, Datab
         if selectView == "People" {
             // Disable edit of biotext
             bioTextView.isEditable = false
-            
-            // if the user is not the same then display the user
-            if allUsers[userTrack].userEmail != loggedOnUser?.userEmail {
-                // display the necessary details
-                userNameLabel.text = "\(allUsers[userTrack].userFirstName) \(allUsers[userTrack].userLastName)"
-                bioTextView.text = "\(allUsers[userTrack].userBio)"
-            }
-                
-            // increment the userTrack to go to the next one
-            else {
-                userTrack += 1
-            }
+        
+            userNameLabel.text = "\(trackUser!.userFirstName) \(trackUser!.userLastName)"
+            bioTextView.text = "\(trackUser!.userBio)"
         }
         
         else {
@@ -69,6 +68,10 @@ class DetailsSegementViewController: UIViewController, UITextViewDelegate, Datab
         for user in users {
             if user.userEmail == loggedOnUser?.userEmail {
                 self.loggedOnUser = user
+            }
+            
+            if user.userEmail == trackUser?.userEmail {
+                self.trackUser = user
             }
         }
         

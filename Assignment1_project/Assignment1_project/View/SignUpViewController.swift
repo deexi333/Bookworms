@@ -10,6 +10,7 @@ import UIKit
 
 class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListener {
     
+    
     // MARK: - Variables
     // Database controller
     weak var databaseController: DatabaseProtocol?
@@ -47,6 +48,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
     }
     
     func onGenreChange(change: DatabaseChange, genres: [Genre]) {
+        
+    }
+    
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
+        
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
         
     }
     
@@ -150,7 +159,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
             var isRegisteredUser: Bool = false
             
             for user in allUsers {
-                if loggedOnUser!.userEmail == user.userEmail {
+                if email == user.userEmail {
                     isRegisteredUser = true
                 }
             }
@@ -180,14 +189,14 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
             tabbarController.navigationItem.setHidesBackButton(true, animated:true)
             tabbarController.navigationItem.title = "PROFILE"
             
-            let profileViewController = tabBarController?.viewControllers?[2] as! ProfileViewController
-            profileViewController.loggedOnUser = self.loggedOnUser
-            
             let peopleViewController = tabBarController?.viewControllers?[0] as! PeopleViewController
             peopleViewController.loggedOnUser = self.loggedOnUser
             
             let chatViewController = tabBarController?.viewControllers?[1] as! ChatViewController
             chatViewController.loggedOnUser = self.loggedOnUser
+            
+            let profileViewController = tabBarController?.viewControllers?[2] as! ProfileViewController
+            profileViewController.loggedOnUser = self.loggedOnUser
             
             tabbarController.selectedIndex = 2
         }

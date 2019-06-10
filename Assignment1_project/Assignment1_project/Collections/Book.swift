@@ -12,15 +12,15 @@ import Firebase
 class Book: NSObject {
     var bookAuthor: String;
     var bookDescription:String?
-    var bookGenre: [String]
+    var bookGenres: [String]
     var bookID: String?
     var bookName: String?
     
-    init(bookID: String, bookAuthor: String, bookDescription: String, bookGenre: [String], bookName: String) {
+    init(bookID: String, bookAuthor: String, bookDescription: String, bookGenres: [String], bookName: String) {
         self.bookID = bookID
         self.bookAuthor = bookAuthor
         self.bookDescription = bookDescription
-        self.bookGenre = [String]()
+        self.bookGenres = bookGenres
         self.bookName = bookName
     }
 }

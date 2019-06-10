@@ -18,13 +18,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var detailsSegmentView: UIView!
     @IBOutlet weak var bookSegmentView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
-    
+
     // Profile picture
     @IBOutlet weak var profilePicture: UIImageView!
     
     // Logged on user
     var loggedOnUser: User?
-    
     
     // MARK: - Functions
     override func viewDidLoad() {
@@ -34,13 +33,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         self.tabBarItem = UITabBarItem(title: "PROFILE", image: nil, selectedImage: nil)
         
         // get the profile picture from the user database entry
-        if loggedOnUser?.userProfilePicture != "defaultProfilePicture" {
+        self.profilePicture.image = UIImage(named: loggedOnUser!.userProfilePicture)
         
-        }
-        
-        else {
-            self.profilePicture.image = UIImage(named: loggedOnUser!.userProfilePicture)
-        }
         
         // Format the profile picture
         self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;

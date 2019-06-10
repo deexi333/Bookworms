@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 enum DatabaseChange {
     case add
@@ -18,6 +19,8 @@ enum ListenerType {
     case user
     case book
     case genre
+    case conversation
+    case message
     case all
 }
 
@@ -26,6 +29,8 @@ protocol DatabaseListener: AnyObject {
     func onUserChange(change: DatabaseChange, users: [User])
     func onBookChange(change: DatabaseChange, books: [Book])
     func onGenreChange(change: DatabaseChange, genres: [Genre])
+    func onConversationChange(change: DatabaseChange, conversations: [Conversation])
+    func onMessageChange(change: DatabaseChange, messages: [Message])
 }
 
 protocol DatabaseProtocol: AnyObject {
@@ -34,22 +39,17 @@ protocol DatabaseProtocol: AnyObject {
     func updateUserBio(userBio: String, userEmail: String)
     func updateUserProfilePicture(userProfilePicture: String, userEmail: String)
     
-//    // Remove
-//    func checkUser(email: String) -> Bool
-//    func getUsers() -> [User]
-//
     // Book
     func deleteBook(book: Book, user: User)
     func addBookToUser(userEmail: String, bookID: String)
     
-//    // Remove
-//    func getBooks() -> [Book]
-//    func getUserBooks(currentUser: User) -> [Book]
-//    func getInverseUserBooks(currentUser: User) -> [Book]
+    // Friends
+    func addFriendToUser(userEmail: String, friendEmail: String)
     
-    // Genres
-//    func getBookGenres(currentBook: Book) -> [Genre]
-    
+    // Chat functionality
+    func addConversation(userEmail: String, friendEmail: String)
+    func addMessage(messageTime: Timestamp, messageReceiver: [String], messageSender: String, messageSent: String)
+
     // Listeners
     func addListener(listener: DatabaseListener)
     func removeListener(listener: DatabaseListener)

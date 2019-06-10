@@ -9,6 +9,14 @@
 import UIKit
 
 class BookSegmentViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
+        
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
+        
+    }
+    
 
     // MARK: - Variables
     // Database controller
@@ -20,11 +28,14 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     
     // The user that has logged on
     var loggedOnUser: User?
+    var trackUser: User?
+    
+    // Selected view
     var selectView: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // App delegate
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
@@ -57,9 +68,16 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     
     // When the user is changed
     func onUserChange(change: DatabaseChange, users: [User]) {
+   
         for user in users {
             if user.userEmail == loggedOnUser?.userEmail {
                 loggedOnUser = user
+            }
+            
+            if selectView == "People" {
+                if user.userEmail == trackUser?.userEmail {
+                    trackUser = user
+                }
             }
         }
     }
@@ -67,12 +85,26 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     func onBookChange(change: DatabaseChange, books: [Book]) {
         allBooks = []
         filteredBooks = []
-        // get all the books of the user
-        for bookID in loggedOnUser!.userBooks {
-            for book in books {
-                if bookID == book.bookID {
-                    allBooks.append(book)
-                    filteredBooks.append(book)
+        
+        if selectView != "People" {
+            // get all the books of the user
+            for bookID in loggedOnUser!.userBooks {
+                for book in books {
+                    if bookID == book.bookID {
+                        allBooks.append(book)
+                        filteredBooks.append(book)
+                    }
+                }
+            }
+        }
+        
+        else {
+            for bookID in loggedOnUser!.userBooks {
+                for book in books {
+                    if bookID == book.bookID {
+                        allBooks.append(book)
+                        filteredBooks.append(book)
+                    }
                 }
             }
         }
@@ -99,18 +131,27 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         super.viewWillAppear(animated)
         // Adds listener
         databaseController?.addListener(listener: self)
+        self.bookTableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Removes listener
         databaseController?.removeListener(listener: self)
+        self.bookTableView.reloadData()
     }
     
     // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         // there are two sections therefore return 2
-        return 2
+        
+        if selectView == "People" {
+            return 1
+        }
+            
+        else {
+            return 2
+        }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -123,7 +164,7 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+    
         if indexPath.section == SECTION_BOOKS {
             let bookCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOK, for: indexPath) as! BookTableViewCell
             let book = filteredBooks[indexPath.row]
@@ -140,8 +181,10 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete && indexPath.section == SECTION_BOOKS {
-            databaseController!.deleteBook(book: filteredBooks[indexPath.row], user: loggedOnUser!)
+        if selectView != "People" {
+            if editingStyle == .delete && indexPath.section == SECTION_BOOKS {
+                databaseController!.deleteBook(book: filteredBooks[indexPath.row], user: loggedOnUser!)
+            }
         }
     }
     
@@ -160,6 +203,7 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         if segue.identifier == "bookDetailsSegue" {
             let destination = segue.destination as! BookDetailViewController
             destination.addBook = false
+            destination.trackUser = self.trackUser
             destination.currentBook = self.filteredBooks[bookTableView.indexPathForSelectedRow!.row]
         }
         

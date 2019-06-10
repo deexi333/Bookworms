@@ -10,11 +10,11 @@ import UIKit
 import Firebase
 
 class Genre: NSObject {
-    var genreId: String?
+    var genreID: String?
     var genreType: String?
     
-    init(genreId: String, genreType: String) {
+    init(genreID: String, genreType: String) {
         self.genreType = genreType
-        self.genreId = genreId
+        self.genreID = genreID
     }
 }

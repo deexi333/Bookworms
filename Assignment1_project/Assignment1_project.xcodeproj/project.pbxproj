@@ -22,6 +22,11 @@
 		C120CDE5227FDFA900CC7E02 /* FirebaseController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C120CDE4227FDFA900CC7E02 /* FirebaseController.swift */; };
 		C137E82E2293EE0000F2C271 /* BookSegmentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C137E82D2293EE0000F2C271 /* BookSegmentViewController.swift */; };
 		C137E8342296587100F2C271 /* AddBookViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C137E8332296587100F2C271 /* AddBookViewController.swift */; };
+		C189CFCF229B47EB004FA81F /* FriendTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189CFCE229B47EB004FA81F /* FriendTableViewCell.swift */; };
+		C189CFD1229B6CEA004FA81F /* ShowChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189CFD0229B6CEA004FA81F /* ShowChatViewController.swift */; };
+		C189CFD3229B7C59004FA81F /* Conversation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189CFD2229B7C59004FA81F /* Conversation.swift */; };
+		C189CFD5229B7C71004FA81F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189CFD4229B7C71004FA81F /* Message.swift */; };
+		C189CFD7229B8D8A004FA81F /* chatMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C189CFD6229B8D8A004FA81F /* chatMessageTableViewCell.swift */; };
 		C1C12F1F228C6C5100FE4D16 /* BookTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C12F1E228C6C5100FE4D16 /* BookTableViewCell.swift */; };
 		C1D545F9227F1F8F00A89172 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D545F8227F1F8F00A89172 /* AppDelegate.swift */; };
 		C1D545FE227F1F8F00A89172 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1D545FC227F1F8F00A89172 /* Main.storyboard */; };
@@ -52,6 +57,11 @@
 		C120CDE4227FDFA900CC7E02 /* FirebaseController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseController.swift; sourceTree = "<group>"; };
 		C137E82D2293EE0000F2C271 /* BookSegmentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookSegmentViewController.swift; sourceTree = "<group>"; };
 		C137E8332296587100F2C271 /* AddBookViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddBookViewController.swift; sourceTree = "<group>"; };
+		C189CFCE229B47EB004FA81F /* FriendTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendTableViewCell.swift; sourceTree = "<group>"; };
+		C189CFD0229B6CEA004FA81F /* ShowChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowChatViewController.swift; sourceTree = "<group>"; };
+		C189CFD2229B7C59004FA81F /* Conversation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conversation.swift; sourceTree = "<group>"; };
+		C189CFD4229B7C71004FA81F /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		C189CFD6229B8D8A004FA81F /* chatMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chatMessageTableViewCell.swift; sourceTree = "<group>"; };
 		C1C12F1E228C6C5100FE4D16 /* BookTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookTableViewCell.swift; sourceTree = "<group>"; };
 		C1D545F5227F1F8F00A89172 /* Assignment1_project.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Assignment1_project.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1D545F8227F1F8F00A89172 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -94,6 +104,8 @@
 				C120CDD6227F5A4400CC7E02 /* User.swift */,
 				C120CDD8227F5A5E00CC7E02 /* Book.swift */,
 				C120CDDA227FB27C00CC7E02 /* Genre.swift */,
+				C189CFD2229B7C59004FA81F /* Conversation.swift */,
+				C189CFD4229B7C71004FA81F /* Message.swift */,
 			);
 			path = Collections;
 			sourceTree = "<group>";
@@ -138,6 +150,7 @@
 		C137E8312293EE9D00F2C271 /* Chat View */ = {
 			isa = PBXGroup;
 			children = (
+				C189CFCD229B47AF004FA81F /* Friend Related */,
 				C120CDC3227F2D6700CC7E02 /* ChatViewController.swift */,
 			);
 			path = "Chat View";
@@ -151,6 +164,16 @@
 				C137E8332296587100F2C271 /* AddBookViewController.swift */,
 			);
 			path = "Book Related";
+			sourceTree = "<group>";
+		};
+		C189CFCD229B47AF004FA81F /* Friend Related */ = {
+			isa = PBXGroup;
+			children = (
+				C189CFCE229B47EB004FA81F /* FriendTableViewCell.swift */,
+				C189CFD0229B6CEA004FA81F /* ShowChatViewController.swift */,
+				C189CFD6229B8D8A004FA81F /* chatMessageTableViewCell.swift */,
+			);
+			path = "Friend Related";
 			sourceTree = "<group>";
 		};
 		C1D545EC227F1F8F00A89172 = {
@@ -377,6 +400,7 @@
 				C120CDCE227F390800CC7E02 /* DetailsSegementViewController.swift in Sources */,
 				D86202272288F6BB003A2E25 /* AddUserDelegate.swift in Sources */,
 				C120CDD2227F425800CC7E02 /* BookDetailViewController.swift in Sources */,
+				C189CFD1229B6CEA004FA81F /* ShowChatViewController.swift in Sources */,
 				C137E8342296587100F2C271 /* AddBookViewController.swift in Sources */,
 				C120CDC2227F2D1D00CC7E02 /* PeopleViewController.swift in Sources */,
 				C1C12F1F228C6C5100FE4D16 /* BookTableViewCell.swift in Sources */,
@@ -386,7 +410,11 @@
 				C120CDC4227F2D6700CC7E02 /* ChatViewController.swift in Sources */,
 				C120CDD7227F5A4400CC7E02 /* User.swift in Sources */,
 				C120CDD9227F5A5E00CC7E02 /* Book.swift in Sources */,
+				C189CFD5229B7C71004FA81F /* Message.swift in Sources */,
 				C1D545F9227F1F8F00A89172 /* AppDelegate.swift in Sources */,
+				C189CFD3229B7C59004FA81F /* Conversation.swift in Sources */,
+				C189CFD7229B8D8A004FA81F /* chatMessageTableViewCell.swift in Sources */,
+				C189CFCF229B47EB004FA81F /* FriendTableViewCell.swift in Sources */,
 				C120CDDB227FB27C00CC7E02 /* Genre.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
