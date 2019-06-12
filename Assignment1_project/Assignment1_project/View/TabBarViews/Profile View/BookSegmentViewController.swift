@@ -9,13 +9,7 @@
 import UIKit
 
 class BookSegmentViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
-        
-    }
-    
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
-        
-    }
+   
     
 
     // MARK: - Variables
@@ -114,6 +108,14 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         
     }
     
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
+        
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
+        
+    }
+    
     // This method updates filteredBooks based on the searchText
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
@@ -148,13 +150,16 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         if selectView == "People" {
             return 1
         }
-            
         else {
             return 2
         }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if selectView == "People" {
+            return filteredBooks.count
+        }
+        
         if section == SECTION_BOOKS
         {
             return filteredBooks.count
@@ -165,19 +170,19 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        if indexPath.section == SECTION_BOOKS {
-            let bookCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOK, for: indexPath) as! BookTableViewCell
-            let book = filteredBooks[indexPath.row]
-            
-            bookCell.bookNameLabel.text = book.bookName
-            
-            return bookCell
+        if indexPath.section == SECTION_ADDBOOK {
+            // gets the count for the tasks and puts it in a new cell
+            // this will then be displayed in the countCell row
+            let addBookCell = tableView.dequeueReusableCell(withIdentifier: CELL_ADDBOOK, for: indexPath)
+            return addBookCell
         }
         
-        // gets the count for the tasks and puts it in a new cell
-        // this will then be displayed in the countCell row
-        let addBookCell = tableView.dequeueReusableCell(withIdentifier: CELL_ADDBOOK, for: indexPath)
-        return addBookCell
+        let bookCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOK, for: indexPath) as! BookTableViewCell
+        let book = filteredBooks[indexPath.row]
+        
+        bookCell.bookNameLabel.text = book.bookName
+        
+        return bookCell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {

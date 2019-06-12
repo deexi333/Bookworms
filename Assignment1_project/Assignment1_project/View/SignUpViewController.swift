@@ -185,19 +185,21 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "signUpSegue" {
             let tabbarController = segue.destination as! UITabBarController
-            
             tabbarController.navigationItem.setHidesBackButton(true, animated:true)
-            tabbarController.navigationItem.title = "PROFILE"
             
-            let peopleViewController = tabBarController?.viewControllers?[0] as! PeopleViewController
-            peopleViewController.loggedOnUser = self.loggedOnUser
+            // Set the user in the profile view
+            let profile = tabbarController.viewControllers![2] as! ProfileViewController
+            profile.loggedOnUser = self.loggedOnUser
             
-            let chatViewController = tabBarController?.viewControllers?[1] as! ChatViewController
-            chatViewController.loggedOnUser = self.loggedOnUser
+            // Set the user in the people view
+            let people = tabbarController.viewControllers![0] as! PeopleViewController
+            people.loggedOnUser = self.loggedOnUser
             
-            let profileViewController = tabBarController?.viewControllers?[2] as! ProfileViewController
-            profileViewController.loggedOnUser = self.loggedOnUser
+            // Set the user in the chat view
+            let chat = tabbarController.viewControllers![1] as! ChatViewController
+            chat.loggedOnUser = self.loggedOnUser
             
+            // Set the tabbar to the people view
             tabbarController.selectedIndex = 2
         }
     }

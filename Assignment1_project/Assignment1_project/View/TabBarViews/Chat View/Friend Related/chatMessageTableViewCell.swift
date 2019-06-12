@@ -1,5 +1,5 @@
 //
-//  chatMessageTableViewCell.swift
+//  ChatMessageTableViewCell.swift
 //  Assignment1_project
 //
 //  Created by ME on 27/5/19.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class chatMessageTableViewCell: UITableViewCell {
+class ChatMessageTableViewCell: UITableViewCell {
 
     @IBOutlet weak var messageLabel: UILabel!
     

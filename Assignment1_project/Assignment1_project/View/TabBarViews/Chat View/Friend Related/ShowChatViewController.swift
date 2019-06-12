@@ -85,7 +85,7 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let messageCell = tableView.dequeueReusableCell(withIdentifier: CELL_MESSAGE, for: indexPath) as! chatMessageTableViewCell
+        let messageCell = tableView.dequeueReusableCell(withIdentifier: CELL_MESSAGE, for: indexPath) as! ChatMessageTableViewCell
         let message = allMessages[indexPath.row]
         
         

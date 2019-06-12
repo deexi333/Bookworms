@@ -75,10 +75,21 @@ class PeopleViewController: UIViewController, DatabaseListener {
         // Set the title of the people tab
         self.tabBarItem = UITabBarItem(title: "PEOPLE", image: nil, selectedImage: nil)
         
+        // Adding a swipe gesture to the right of the view
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(gesture:)))
+        profileView.addGestureRecognizer(swipeRightGesture)
+        
         // Fixing the keyboard
         self.segmentController.selectedSegmentIndex = 0
         detailsSegmentView.isHidden = false
         bookSegmentView.isHidden = true
+    }
+    
+    @objc func handleSwipes(gesture: UISwipeGestureRecognizer) {
+        if (gesture.direction == .right) {
+            print("Swipe Right")
+            
+        }
     }
     
     // Change depending on what segment
@@ -137,7 +148,7 @@ class PeopleViewController: UIViewController, DatabaseListener {
         }
         
         if segue.identifier == "addFriendSegue" {
-            let tabbarController = segue.destination as! UITabBarController
+            let _ = segue.destination as! UITabBarController
             let chatViewController = tabBarController?.viewControllers?[1] as! ChatViewController
             chatViewController.loggedOnUser = self.loggedOnUser
         }
