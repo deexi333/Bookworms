@@ -18,6 +18,7 @@ class User: NSObject {
     var userBooks: [String]
     var userFriends: [String]
     var userPassword: String
+    var userConversations: [String]
     
     
     init(userFirstName: String, userLastName: String, userEmail: String, userPassword: String, userBio: String, userProfilePicture: String) {
@@ -27,6 +28,7 @@ class User: NSObject {
         self.userPassword = userPassword
         self.userBooks = [String]()
         self.userFriends = [String]()
+        self.userConversations = [String]()
         self.userBio = userBio
         self.userProfilePicture = userProfilePicture
     }

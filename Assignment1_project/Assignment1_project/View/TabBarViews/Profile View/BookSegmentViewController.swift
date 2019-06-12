@@ -148,17 +148,15 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         // there are two sections therefore return 2
         
         if selectView == "People" {
-            return 1
+            return 2
         }
+            
         else {
             return 2
         }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if selectView == "People" {
-            return filteredBooks.count
-        }
         
         if section == SECTION_BOOKS
         {

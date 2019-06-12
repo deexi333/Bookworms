@@ -15,7 +15,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     
     func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
         
-    }
+   }
     
     
     // MARK: - Variables

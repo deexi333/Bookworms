@@ -12,7 +12,7 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
     var listenerType = ListenerType.all
     
     var allUsers: [User] = []
-    var allMessages: [String] = ["hi", "cool", "very good"]
+    var allMessages: [String] = ["hi"]
     
     func onUserChange(change: DatabaseChange, users: [User]) {
         

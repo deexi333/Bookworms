@@ -76,8 +76,10 @@ class PeopleViewController: UIViewController, DatabaseListener {
         self.tabBarItem = UITabBarItem(title: "PEOPLE", image: nil, selectedImage: nil)
         
         // Adding a swipe gesture to the right of the view
-        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipes(gesture:)))
-        profileView.addGestureRecognizer(swipeRightGesture)
+        // REF: https://www.youtube.com/watch?v=mhoCulcSbeY#action=share
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
+        swipeLeftGesture.direction = UISwipeGestureRecognizer.Direction.left
+       self.profileView.addGestureRecognizer(swipeLeftGesture)
         
         // Fixing the keyboard
         self.segmentController.selectedSegmentIndex = 0
@@ -85,13 +87,7 @@ class PeopleViewController: UIViewController, DatabaseListener {
         bookSegmentView.isHidden = true
     }
     
-    @objc func handleSwipes(gesture: UISwipeGestureRecognizer) {
-        if (gesture.direction == .right) {
-            print("Swipe Right")
-            
-        }
-    }
-    
+
     // Change depending on what segment
     @IBAction func onSegmentChange(_ sender: Any) {
         switch  segmentController.selectedSegmentIndex {
@@ -112,6 +108,7 @@ class PeopleViewController: UIViewController, DatabaseListener {
     
     @IBAction func addFriendToUser(_ sender: Any) {
         let _ = databaseController!.addFriendToUser(userEmail: loggedOnUser!.userEmail, friendEmail: trackUser!.userEmail)
+        let _ = databaseController!.addConversation(userEmail: loggedOnUser!.userEmail, friendEmail: trackUser!.userEmail)
         let _ = self.tabBarController!.viewControllers![1] as! ChatViewController
     }
     
@@ -152,5 +149,11 @@ class PeopleViewController: UIViewController, DatabaseListener {
             let chatViewController = tabBarController?.viewControllers?[1] as! ChatViewController
             chatViewController.loggedOnUser = self.loggedOnUser
         }
+    }
+}
+
+extension UIViewController {
+    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
+        print("hi")
     }
 }

@@ -26,8 +26,9 @@ class BookDetailViewController: UIViewController, DatabaseListener {
     weak var databaseController: DatabaseProtocol?
     
     // Linked to storyboard variables
+    
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UITextView!
     @IBOutlet weak var authorLabel: UILabel!
     @IBOutlet weak var genresLabel: UILabel!
     @IBOutlet weak var addBookButton: UIButton!

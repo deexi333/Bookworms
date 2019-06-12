@@ -267,11 +267,18 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 userFriends.append(friendID)
             }
             
+            var userConversations: [String] = []
+            
+            for conversationID in change.document.data()["userConversations"] as! [String] {
+                userConversations.append(conversationID)
+            }
+            
             if change.type == .added {
                 print("New user: \(change.document.data())")
                 let newUser = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userPassword: userPassword, userBio: userBio, userProfilePicture: userProfilePicture)
                 newUser.userFriends = userFriends
                 newUser.userBooks = userBooks
+                newUser.userConversations = userConversations
                 userList.append(newUser)
             }
         
@@ -286,6 +293,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
                 userList[index].userBooks = userBooks
                 userList[index].userFriends = userFriends
                 userList[index].userProfilePicture = userProfilePicture
+                userList[index].userConversations = userConversations
             }
             
             if change.type == .removed {
@@ -386,10 +394,11 @@ class FirebaseController: NSObject, DatabaseProtocol {
     func addUser(userFirstName: String, userLastName: String, userEmail: String, userPassword: String) -> User {
         let userFriends = [String]()
         let userBooks = [String]()
+        let userConversations = [String]()
         let userBio = "Enter a bio..."
         let userProfilePicture = "defaultProfilePicture" 
         
-        let _ = usersRef?.document(String(userEmail)).setData(["userFirstName": userFirstName, "userLastName": userLastName, "userEmail": userEmail, "userPassword": userPassword, "userBooks": userBooks, "userFriends": userFriends, "userBio": userBio, "userProfilePicture": userProfilePicture])
+        let _ = usersRef?.document(String(userEmail)).setData(["userFirstName": userFirstName, "userLastName": userLastName, "userEmail": userEmail, "userPassword": userPassword, "userBooks": userBooks, "userFriends": userFriends, "userBio": userBio, "userProfilePicture": userProfilePicture, "userConversations": userConversations])
         
         let user = User(userFirstName: userFirstName, userLastName: userLastName, userEmail: userEmail, userPassword: userPassword, userBio: userBio, userProfilePicture: userProfilePicture)
         
