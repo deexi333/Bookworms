@@ -489,22 +489,69 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     func addConversation(userEmail: String, friendEmail: String) {
         let conversationMessages = [String]()
-        let conversationUsers = [String]()
+        var conversationUsers:[String] = []
         let conversationID = self.conversationIDTrack + 1
-        self.conversationIDTrack += 1
         
-        let _ = usersRef?.document(String(conversationID)).setData(["conversationMessages": conversationMessages, "conversationUsers": conversationUsers])
+        conversationUsers.append(userEmail)
+        conversationUsers.append(friendEmail)
+    
+        let _ = conversationsRef?.document(String(conversationID)).setData(["conversationMessages": conversationMessages, "conversationUsers": conversationUsers])
+        //let newConversation = Conversation(conversationID: String(conversationID))
+        
+        var uConversations:[String] = []
+        
+        for user in userList {
+            if user.userEmail == userEmail {
+                for conversation in user.userConversations {
+                    uConversations.append(conversation)
+                }
+            }
+        }
+        
+        uConversations.append(String(conversationID))
+        
+        var fConversations:[String] = []
+        
+        for user in userList {
+            if user.userEmail == friendEmail {
+                for conversation in user.userConversations {
+                    fConversations.append(conversation)
+                }
+            }
+        }
+        
+        fConversations.append(String(conversationID))
+        
+        let _ = usersRef?.document(String(userEmail)).updateData(["userConversations": uConversations])
+        let _ = usersRef?.document(String(friendEmail)).updateData(["userConversations": fConversations])
+        
+        self.conversationIDTrack += 1
     }
     
-    func addMessage(messageTime: Timestamp, messageReceiver: [String], messageSender: String, messageSent: String) {
+    func addMessage(messageTime: Timestamp, messageReceiver: [String], messageSender: String, messageSent: String, conversationID: String) {
         let messageTime = messageTime
         let messageReceiver = messageReceiver
         let messageSender = messageSender
         let messageSent = messageSent
         let messageID = self.messageIDTrack + 1
-        self.messageIDTrack += 1
         
-        let _ = usersRef?.document(String(messageID)).setData(["messageReceiver": messageReceiver, "messageSender": messageSender, "messageSent": messageSent, "messageTime": messageTime])
+        var messagesList:[String] = []
+        
+        for conversation in conversationList {
+            if conversation.conversationID == conversationID {
+                for message in conversation.conversationMessages! {
+                    messagesList.append(message)
+                }
+            }
+        }
+        
+        messagesList.append(String(messageID))
+        
+        let _ = conversationsRef?.document(conversationID).updateData(["conversationMessages": messagesList])
+        
+        let _ = messagesRef?.document(String(messageID)).setData(["messageReceiver": messageReceiver, "messageSender": messageSender, "messageSent": messageSent, "messageTime": messageTime])
+        
+        self.messageIDTrack += 1
     }
     
     func addListener(listener: DatabaseListener) {

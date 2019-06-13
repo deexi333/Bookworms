@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestore
 
 enum DatabaseChange {
     case add
@@ -48,7 +49,7 @@ protocol DatabaseProtocol: AnyObject {
     
     // Chat functionality
     func addConversation(userEmail: String, friendEmail: String)
-    func addMessage(messageTime: Timestamp, messageReceiver: [String], messageSender: String, messageSent: String)
+    func addMessage(messageTime: Timestamp, messageReceiver: [String], messageSender: String, messageSent: String, conversationID: String)
 
     // Listeners
     func addListener(listener: DatabaseListener)

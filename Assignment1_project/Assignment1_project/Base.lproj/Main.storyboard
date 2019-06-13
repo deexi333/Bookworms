@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aaB-Hi-dOa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aaB-Hi-dOa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,49 +27,49 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bookworms" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vi2-Au-YmX">
-                                <rect key="frame" x="70" y="129" width="235" height="41"/>
+                                <rect key="frame" x="70" y="129" width="235" height="48"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="35"/>
                                 <color key="textColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fui-B1-JIG">
-                                <rect key="frame" x="70" y="185" width="235" height="20"/>
+                                <rect key="frame" x="70" y="192" width="235" height="23.5"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="__________________________________" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x2I-Qb-KFO">
-                                <rect key="frame" x="60" y="392" width="255" height="21"/>
+                                <rect key="frame" x="60" y="410" width="255" height="21"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aYX-1x-3bv">
-                                <rect key="frame" x="70" y="305" width="235" height="20"/>
+                                <rect key="frame" x="70" y="315.5" width="235" height="23.5"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New User?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ek9-NH-qlZ">
-                                <rect key="frame" x="70" y="433" width="235" height="20"/>
+                                <rect key="frame" x="70" y="451" width="235" height="23.5"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WQ5-sj-cRL">
-                                <rect key="frame" x="70" y="220" width="235" height="30"/>
+                                <rect key="frame" x="70" y="230.5" width="235" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g5P-em-gmc">
-                                <rect key="frame" x="70" y="260" width="235" height="30"/>
+                                <rect key="frame" x="70" y="270.5" width="235" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2Y-B9-wEP">
-                                <rect key="frame" x="70" y="340" width="235" height="32"/>
+                                <rect key="frame" x="70" y="354" width="235" height="36"/>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <state key="normal" title="GO!">
@@ -80,7 +80,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3XG-M6-l9B">
-                                <rect key="frame" x="70" y="483" width="235" height="32"/>
+                                <rect key="frame" x="70" y="504.5" width="235" height="36"/>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <state key="normal" title="Sign Up">
@@ -143,49 +143,49 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bookworms" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="emw-Sx-fcr">
-                                <rect key="frame" x="70" y="129" width="235" height="41"/>
+                                <rect key="frame" x="70" y="129" width="235" height="48"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="35"/>
                                 <color key="textColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="First Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Zld-qv-1Ad">
-                                <rect key="frame" x="70" y="225" width="235" height="30"/>
+                                <rect key="frame" x="70" y="235.5" width="235" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Last name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vAR-hZ-aUV">
-                                <rect key="frame" x="70" y="270" width="235" height="30"/>
+                                <rect key="frame" x="70" y="280.5" width="235" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZX9-S2-Agy">
-                                <rect key="frame" x="70" y="315" width="235" height="30"/>
+                                <rect key="frame" x="70" y="325.5" width="235" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="15"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Rvj-L1-Gd5">
-                                <rect key="frame" x="70" y="360" width="235" height="30"/>
+                                <rect key="frame" x="70" y="370.5" width="235" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="reenter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NFc-7G-2Ix">
-                                <rect key="frame" x="70" y="405" width="235" height="30"/>
+                                <rect key="frame" x="70" y="415.5" width="235" height="30"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="15"/>
                                 <textInputTraits key="textInputTraits" textContentType="password"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign up" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asN-gf-EYH">
-                                <rect key="frame" x="70" y="190" width="235" height="20"/>
+                                <rect key="frame" x="70" y="197" width="235" height="23.5"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wcv-qs-SUj">
-                                <rect key="frame" x="70" y="515" width="235" height="32"/>
+                                <rect key="frame" x="70" y="529" width="235" height="36"/>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <state key="normal" title="Go!">
@@ -197,7 +197,7 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a5n-Tf-SVb">
-                                <rect key="frame" x="70" y="445" width="235" height="20"/>
+                                <rect key="frame" x="70" y="455.5" width="235" height="23.5"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -273,7 +273,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="UserName" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="100" translatesAutoresizingMaskIntoConstraints="NO" id="I2A-R0-CSU">
-                                                    <rect key="frame" x="102" y="14" width="232.5" height="72"/>
+                                                    <rect key="frame" x="102" y="14" width="236.5" height="72"/>
                                                     <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -286,7 +286,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="V2h-bR-Dh4">
-                                                    <rect key="frame" x="349.5" y="14" width="10.5" height="71.5"/>
+                                                    <rect key="frame" x="353.5" y="14" width="6.5" height="71.5"/>
                                                     <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -345,7 +345,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SCr-6X-zh2">
-                                <rect key="frame" x="0.0" y="64" width="375" height="531"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="527"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatMessageCell" id="mhz-eC-8L0" customClass="ChatMessageTableViewCell" customModule="Assignment1_project" customModuleProvider="target">
@@ -376,14 +376,14 @@
                                 </prototypes>
                             </tableView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" keyboardDismissMode="interactive" text="Send a message..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Q9r-dn-LIe">
-                                <rect key="frame" x="16" y="615" width="297" height="32"/>
+                                <rect key="frame" x="16" y="611" width="299" height="36"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSv-WB-i46">
-                                <rect key="frame" x="313" y="615" width="46" height="32"/>
+                                <rect key="frame" x="315" y="611" width="44" height="36"/>
                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                 <state key="normal" title="SEND">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -751,13 +751,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Book" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ObE-hZ-waQ">
-                                                    <rect key="frame" x="10" y="7" width="271.5" height="35.5"/>
+                                                    <rect key="frame" x="10" y="7" width="275.5" height="35.5"/>
                                                     <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dLg-dF-WOr">
-                                                    <rect key="frame" x="299.5" y="0.0" width="10.5" height="49.5"/>
+                                                    <rect key="frame" x="303.5" y="0.0" width="6.5" height="49.5"/>
                                                     <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -831,35 +831,35 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" editable="NO" text="Description text" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLe-5r-aJ0">
+                                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Description text" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DLe-5r-aJ0">
                                                 <rect key="frame" x="16" y="126.5" width="283" height="150"/>
                                                 <color key="backgroundColor" red="0.85102385282516479" green="0.8907122015953064" blue="0.83527934551239014" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="150" id="bj1-wu-hwQ"/>
+                                                    <constraint firstAttribute="height" constant="150" id="bj1-wu-hwQ"/>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Genres" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qA-ZH-sLw">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Genres" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4qA-ZH-sLw">
                                                 <rect key="frame" x="16" y="296.5" width="283" height="22"/>
                                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wKg-gQ-PZp">
-                                                <rect key="frame" x="16" y="330" width="283" height="21"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wKg-gQ-PZp">
+                                                <rect key="frame" x="16" y="328.5" width="283" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7l-4a-ncx">
-                                                <rect key="frame" x="16" y="398.5" width="283" height="22"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Author" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E7l-4a-ncx">
+                                                <rect key="frame" x="16" y="369" width="283" height="22"/>
                                                 <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="16"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZk-qm-sA8">
-                                                <rect key="frame" x="16" y="430.5" width="283" height="20.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZk-qm-sA8">
+                                                <rect key="frame" x="16" y="401" width="283" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1017,8 +1017,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="defaultProfilePicture" width="100" height="100"/>
-        <image name="settings-cog" width="30" height="30"/>
+        <image name="defaultProfilePicture" width="75" height="75"/>
+        <image name="settings-cog" width="154.28572082519531" height="154.28572082519531"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="orW-Q1-t1O"/>

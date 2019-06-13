@@ -9,14 +9,26 @@
 import UIKit
 
 class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
+    func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {
+        allConversations = []
         
+        for user in allUsers {
+            if user.userEmail == loggedOnUser?.userEmail {
+                for conversationID in user.userConversations {
+                    for conversation in conversations {
+                        if conversationID == conversation.conversationID {
+                            allConversations.append(conversation)
+                            filteredConversations.append(conversation)
+                        }
+                    }
+                }
+            }
+        }
     }
     
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
+    func onMessageChange(change: DatabaseChange, messages: [Message]) {
         
    }
-    
     
     // MARK: - Variables
     weak var databaseController: DatabaseProtocol?
@@ -55,30 +67,11 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     let CELL_FRIEND = "friendCell"
     
     var allUsers: [User] = []
-    var allFriends: [User] = []
-    var filteredFriends: [User] = []
+    var allConversations: [Conversation] = []
+    var filteredConversations: [Conversation] = []
+    
     
     func onUserChange(change: DatabaseChange, users: [User]) {
-        
-        allFriends = []
-        filteredFriends = []
-        
-        for user in users {
-            if loggedOnUser?.userEmail == user.userEmail {
-                loggedOnUser = user
-            }
-        }
-        
-        
-        for friendID in (loggedOnUser?.userFriends)! {
-            for user in users {
-                if friendID == user.userEmail {
-                    allFriends.append(user)
-                    filteredFriends.append(user)
-                }
-            }
-        }
-        
         allUsers = users
     }
     
@@ -107,9 +100,9 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         // If the search textis not emptythen get allBooks
-        filteredFriends = searchText.isEmpty ? allFriends : allFriends.filter({(dataString: User) -> Bool in
+        filteredConversations = searchText.isEmpty ? allConversations : allConversations.filter({(dataString: Conversation) -> Bool in
             // return the entries that have the same name as the search text
-            return dataString.userEmail.range(of: searchText, options: .caseInsensitive) != nil
+            return dataString.conversationUsers![1].range(of: searchText, options: .caseInsensitive) != nil
         })
         
         // reload the data
@@ -123,7 +116,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == SECTION_FRIENDS {
-            return filteredFriends.count
+            return filteredConversations.count
         }
         else {
             return 1
@@ -132,7 +125,20 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath) as! FriendTableViewCell
-        let friend = filteredFriends[indexPath.row]
+        
+        var friend: User = loggedOnUser!
+        
+        for conversation in filteredConversations {
+            for userID in conversation.conversationUsers! {
+                if userID != loggedOnUser?.userEmail {
+                    for user in allUsers {
+                        if user.userEmail == userID {
+                            friend = user
+                        }
+                    }
+                }
+            }
+        }
         
         friendCell.friendUserName.text = "\(friend.userFirstName) \(friend.userLastName)"
         friendCell.friendProfileImage.image = UIImage(named: friend.userProfilePicture)
@@ -150,14 +156,18 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         }
         return false
     }
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "showMessagesSegue" {
+            let destination = segue.destination as! ShowChatViewController
+            destination.currentConversation = self.filteredConversations[friendsTableView.indexPathForSelectedRow!.row]
+        }
     }
-    */
+    
 
 }

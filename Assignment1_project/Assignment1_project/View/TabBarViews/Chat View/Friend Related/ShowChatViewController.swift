@@ -11,6 +11,8 @@ import UIKit
 class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDelegate, UITableViewDataSource{
     var listenerType = ListenerType.all
     
+    var currentConversation: Conversation?
+    
     var allUsers: [User] = []
     var allMessages: [String] = ["hi"]
     
