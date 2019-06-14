@@ -80,6 +80,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {
         // All the conversations
         allConversations = []
+        filteredConversations = []
         
         // Interate through each user
         for user in allUsers {
@@ -108,6 +109,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
                             
                             // Add the conversation and the names as a tuple
                             allConversations.append((names, conversation))
+                            print((names, conversation))
                             filteredConversations.append((names, conversation))
                         }
                     }
@@ -127,8 +129,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     // Table view variables
     let SECTION_FRIENDS = 0
     let CELL_FRIEND = "friendCell"
-    
-    // Table view functions
+
     // Search Functionality
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
@@ -142,6 +143,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         self.friendsTableView.reloadData()
     }
     
+    // Table view functions
     func numberOfSections(in tableView: UITableView) -> Int {
         // there is one sections therefore return 1
         return 1
@@ -158,7 +160,6 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath) as! FriendTableViewCell
-        
         friendCell.friendUserName.text = filteredConversations[indexPath.row].0
         friendCell.friendProfileImage.image = UIImage(named: "defaultProfilePicture")
         friendCell.friendProfileImage.layer.cornerRadius = friendCell.friendProfileImage.frame.size.width / 2;

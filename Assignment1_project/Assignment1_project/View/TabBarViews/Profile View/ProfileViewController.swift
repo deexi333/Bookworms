@@ -8,15 +8,14 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, DatabaseListener {
     
     // MARK: - Variables
     // Database controller
     weak var databaseController: DatabaseProtocol?
     
-    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
-    
     // Fields from the storyboard
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var detailsSegmentView: UIView!
     @IBOutlet weak var bookSegmentView: UIView!
     @IBOutlet weak var segmentedControl: UISegmentedControl!
@@ -27,14 +26,13 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // Logged on user
     var loggedOnUser: User?
     
+    // Listener
+    var listenerType = ListenerType.all
+    
     // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name:UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
         // get the profile picture from the user database entry
         self.profilePicture.image = UIImage(named: loggedOnUser!.userProfilePicture)
 
@@ -52,16 +50,30 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
+        // REF: https://stackoverflow.com/questions/50325019/moving-view-up-with-textfield-and-button-when-keyboard-appear-swift
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name:UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        
+        // Making sure the profile picture can be tapped
         profilePicture.isUserInteractionEnabled = true
         
+        // adding the tap gesture to the profile picture
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap(gesture:)))
         tapGesture.numberOfTapsRequired = 2
         profilePicture.addGestureRecognizer(tapGesture)
     }
     
+    // the double tap gesture
     @objc func doubleTap(gesture: UITapGestureRecognizer) {
+        // An alert message is shown if the user has not accepted the camera acceptance
+        if loggedOnUser?.userCameraAcceptance == "false" {
+            createCheckMessage(title: "'Bookworms' Would Like to Access Your Camera Roll", message: "Bookworms needs to access your camera roll to choose your profile picture")
+        }
         
-        createCheckMessage(title: "'Bookworms' Would Like to Access Your Camera Roll", message: "Bookworms needs to access your camera roll to choose your profile picture")
+        else {
+            self.pickImage()
+        }
        
     }
     
@@ -101,8 +113,26 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     
-    // MARK: - Navigation
+    // MARK: - Database Protocol
+    func onUserChange(change: DatabaseChange, users: [User]) {
+        // get the updated user
+        for user in users {
+            if user.userEmail == loggedOnUser?.userEmail {
+                loggedOnUser = user
+            }
+        }
+    }
     
+    func onBookChange(change: DatabaseChange, books: [Book]) { }
+    
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
+    
+    func onConversationChange(change: DatabaseChange, conversations: [Conversation]) { }
+    
+    func onMessageChange(change: DatabaseChange, messages: [Message]) { }
+    
+    
+    // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Pass through the user to the various views
         if segue.identifier == "profileTabDetailsSegementSegue" {
@@ -128,7 +158,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         alert.addAction(UIAlertAction(title: "Allow", style: UIAlertAction.Style.default, handler: { (action) in
             alert.dismiss(animated: true, completion: nil)
-            
+            self.databaseController?.updateUserCameraAcceptance(userEmail: self.loggedOnUser!.userEmail, userCameraAcceptance: "true")
             self.pickImage()
         }))
         

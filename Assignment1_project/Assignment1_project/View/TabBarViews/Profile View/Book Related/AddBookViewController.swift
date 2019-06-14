@@ -9,15 +9,7 @@
 import UIKit
 
 class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
-        
-    }
     
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
-        
-    }
-    
-
     // MARK: - Variables
     // Database controller
     weak var databaseController: DatabaseProtocol?
@@ -29,13 +21,18 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
     // Firebase variables
     var loggedOnUser: User?
     
+    // Listener
+    var listenerType = ListenerType.all
+    
+    // All the users in the application
+    var allUsers: [User] = []
+    // All the books in the application
+    var allBooks: [Book] = []
+    // Filtered books
+    var filteredBooks: [Book] = []
+    
+    
     // MARK: - Functions
-    
-    func loadData() {
-        // code to load data from network, and refresh the interface
-        allBooksTableView.reloadData()
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -48,7 +45,7 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         // Search set up
         searchBar.delegate = self
         definesPresentationContext = true
-
+        
         // Initialise table view
         allBooksTableView.reloadData()
         allBooksTableView.delegate  = self
@@ -56,26 +53,23 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         self.loadData()
     }
     
-    // MARK: - Table View Content
+    // reloading the table view function
+    func loadData() {
+        // code to load data from network, and refresh the interface
+        allBooksTableView.reloadData()
+    }
     
-    // Listener
-    var listenerType = ListenerType.all
     
-    // Variables
-    let SECTION_BOOKS = 0
-    let CELL_BOOK = "book"
-    
-    var allUsers: [User] = []
-    var allBooks: [Book] = []
-    var filteredBooks: [Book] = []
-    
+    // MARK: - Database Protocol
     func onUserChange(change: DatabaseChange, users: [User]) {
+        // Get the current details of the logged on user
         for user in users {
             if loggedOnUser?.userEmail == user.userEmail {
                 loggedOnUser = user
             }
         }
         
+        // get all the users
         allUsers = users
     }
     
@@ -83,10 +77,12 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         allBooks = []
         filteredBooks = []
         
+        // get all the books of the user
         for user in allUsers {
             if user.userEmail == loggedOnUser?.userEmail {
                 for book in books {
                     var isInUserBooks: Bool = false
+                    
                     for bookID in user.userBooks {
                         if book.bookID == bookID {
                             isInUserBooks = true
@@ -102,23 +98,14 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         }
     }
     
-    func onGenreChange(change: DatabaseChange, genres: [Genre]) {
-        
-    }
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
+    
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) { }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) { }
     
     
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        // If the search textis not emptythen get allBooks
-        filteredBooks = searchText.isEmpty ? allBooks : allBooks.filter({(dataString: Book) -> Bool in
-            // return the entries that have the same name as the search text
-            return dataString.bookName?.range(of: searchText, options: .caseInsensitive) != nil
-        })
-        
-        // reload the data
-        self.loadData()
-    }
-    
+    // MARK: - View will appear and disapper functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Adds listener
@@ -131,6 +118,25 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         super.viewWillDisappear(animated)
         // Removes listener
         databaseController?.removeListener(listener: self)
+        self.loadData()
+    }
+    
+    
+    // MARK: - Table View
+    // Variables
+    let SECTION_BOOKS = 0
+    let CELL_BOOK = "book"
+    
+    // Search functionality
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        // If the search textis not emptythen get allBooks
+        filteredBooks = searchText.isEmpty ? allBooks : allBooks.filter({(dataString: Book) -> Bool in
+            // return the entries that have the same name as the search text
+            return dataString.bookName?.range(of: searchText, options: .caseInsensitive) != nil
+        })
+        
+        // reload the data
         self.loadData()
     }
     
@@ -157,7 +163,6 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         return bookCell
     }
     
-    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // checks whether or not the row is a task
         if indexPath.section == SECTION_BOOKS {
@@ -168,18 +173,13 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
     
     
     // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "addBookDetailsSegue" {
             let destination = segue.destination as! BookDetailViewController
             destination.addBook = true
             destination.currentBook = self.filteredBooks[allBooksTableView.indexPathForSelectedRow!.row]
             destination.loggedOnUser = self.loggedOnUser
         }
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
     
 

@@ -36,10 +36,10 @@ class PeopleViewController: UIViewController, DatabaseListener {
     var trackUser: User?
     var allUsers: [User]?
     
-    var listenerType = ListenerType.user
+    var listenerType = ListenerType.all
     
     func onUserChange(change: DatabaseChange, users: [User]) {
-        allUsers = users
+        allUsers = []
         
         for user in users {
             if user.userEmail == loggedOnUser!.userEmail {
@@ -47,13 +47,32 @@ class PeopleViewController: UIViewController, DatabaseListener {
             }
         }
         
-        trackUser = allUsers![0]
-        self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
+        for user in users {
+            if user.userEmail != loggedOnUser?.userEmail {
+                if user.userFriends.count > 0 {
+                    for friend in user.userFriends {
+                        if friend != user.userEmail {
+                            allUsers?.append(user)
+                        }
+                    }
+                }
+                
+                else {
+                    allUsers?.append(user)
+                }
+            }
+        }
         
-        // Format the profile picture
-        self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
-        self.profilePicture.clipsToBounds = true;
-        self.profilePicture.layer.borderWidth = 1;
+        if allUsers!.count > 0 {
+            // get the first user
+            trackUser = allUsers![userTrack]
+            self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
+            
+            // Format the profile picture
+            self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
+            self.profilePicture.clipsToBounds = true;
+            self.profilePicture.layer.borderWidth = 1;
+        }
     }
     
     func onBookChange(change: DatabaseChange, books: [Book]) {
@@ -76,7 +95,7 @@ class PeopleViewController: UIViewController, DatabaseListener {
         // REF: https://www.youtube.com/watch?v=mhoCulcSbeY#action=share
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
         swipeLeftGesture.direction = UISwipeGestureRecognizer.Direction.left
-       self.profileView.addGestureRecognizer(swipeLeftGesture)
+        self.profileView.addGestureRecognizer(swipeLeftGesture)
         
         // Fixing the keyboard
         self.segmentController.selectedSegmentIndex = 0
@@ -147,10 +166,28 @@ class PeopleViewController: UIViewController, DatabaseListener {
             chatViewController.loggedOnUser = self.loggedOnUser
         }
     }
-}
-
-extension UIViewController {
+    
     @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
-        print("hi")
+        if userTrack == allUsers!.count - 1 {
+            userTrack = 0
+        }
+        
+        else {
+            userTrack += 1
+        }
+        
+        trackUser = allUsers![userTrack]
+        self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
+        
+        // Format the profile picture
+        self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
+        self.profilePicture.clipsToBounds = true;
+        self.profilePicture.layer.borderWidth = 1;
+        print("this is called swipe." + "\(trackUser!.userEmail)")
+        
+        
     }
 }
+
+
+

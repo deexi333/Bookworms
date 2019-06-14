@@ -19,7 +19,7 @@ class User: NSObject {
     var userFriends: [String]
     var userPassword: String
     var userConversations: [String]
-    
+    var userCameraAcceptance: String
     
     init(userFirstName: String, userLastName: String, userEmail: String, userPassword: String, userBio: String, userProfilePicture: String) {
         self.userFirstName = userFirstName
@@ -31,6 +31,7 @@ class User: NSObject {
         self.userConversations = [String]()
         self.userBio = userBio
         self.userProfilePicture = userProfilePicture
+        self.userCameraAcceptance = "false"
     }
     
 }

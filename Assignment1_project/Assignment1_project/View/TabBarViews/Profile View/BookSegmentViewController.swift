@@ -10,13 +10,11 @@ import UIKit
 
 class BookSegmentViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
    
-    
-
     // MARK: - Variables
     // Database controller
     weak var databaseController: DatabaseProtocol?
 
-    // Table view
+    // Elements from the storyboard
     @IBOutlet weak var bookTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -26,7 +24,17 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     
     // Selected view
     var selectView: String?
+    
+    // Listener
+    var listenerType = ListenerType.all
+    
+    // All the books in the application
+    var allBooks: [Book] = []
+    // Filtered books
+    var filteredBooks: [Book] = []
 
+    
+    // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -46,29 +54,18 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         bookTableView.reloadData()
     }
     
-    // MARK: - TableView Content
     
-    // Listener
-    var listenerType = ListenerType.all
-    
-    // Variables
-    let SECTION_ADDBOOK = 0
-    let SECTION_BOOKS = 1
-    let CELL_ADDBOOK = "addBook"
-    let CELL_BOOK = "book"
-    
-    var allBooks: [Book] = []
-    var filteredBooks: [Book] = []
-    
-    // When the user is changed
+    // MARK: - Database Protocols
     func onUserChange(change: DatabaseChange, users: [User]) {
-   
+        // iterate through the user
         for user in users {
             if user.userEmail == loggedOnUser?.userEmail {
+                // get the updated logged in user
                 loggedOnUser = user
             }
             
             if selectView == "People" {
+                // if the view is people then get the tracked user
                 if user.userEmail == trackUser?.userEmail {
                     trackUser = user
                 }
@@ -80,6 +77,7 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         allBooks = []
         filteredBooks = []
         
+        // if the view is people
         if selectView != "People" {
             // get all the books of the user
             for bookID in loggedOnUser!.userBooks {
@@ -91,7 +89,7 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
                 }
             }
         }
-        
+            
         else {
             for bookID in loggedOnUser!.userBooks {
                 for book in books {
@@ -104,31 +102,14 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         }
     }
     
-    func onGenreChange(change: DatabaseChange, genres: [Genre]) {
-        
-    }
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
     
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
-        
-    }
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) { }
     
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
-        
-    }
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) { }
     
-    // This method updates filteredBooks based on the searchText
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        // If the search textis not emptythen get allBooks
-        filteredBooks = searchText.isEmpty ? allBooks : allBooks.filter({(dataString: Book) -> Bool in
-            // return the entries that have the same name as the search text
-            return dataString.bookName?.range(of: searchText, options: .caseInsensitive) != nil
-        })
-        
-        // reload the data
-        bookTableView.reloadData()
-    }
     
+    // View will appear and disappear
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Adds listener
@@ -142,6 +123,29 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         databaseController?.removeListener(listener: self)
         self.bookTableView.reloadData()
     }
+    
+    
+    // MARK: - TableView
+    // Variables
+    let SECTION_ADDBOOK = 0
+    let SECTION_BOOKS = 1
+    let CELL_ADDBOOK = "addBook"
+    let CELL_BOOK = "book"
+    
+    // Functions
+    // This method updates filteredBooks based on the searchText
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        // If the search textis not emptythen get allBooks
+        filteredBooks = searchText.isEmpty ? allBooks : allBooks.filter({(dataString: Book) -> Bool in
+            // return the entries that have the same name as the search text
+            return dataString.bookName?.range(of: searchText, options: .caseInsensitive) != nil
+        })
+        
+        // reload the data
+        bookTableView.reloadData()
+    }
+    
     
     // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -157,7 +161,6 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
         if section == SECTION_BOOKS
         {
             return filteredBooks.count
@@ -201,7 +204,6 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     
     
     // MARK: - Navigation
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "bookDetailsSegue" {
             let destination = segue.destination as! BookDetailViewController

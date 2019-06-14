@@ -39,6 +39,7 @@ protocol DatabaseProtocol: AnyObject {
     func addUser(userFirstName: String, userLastName: String, userEmail: String, userPassword: String) -> User
     func updateUserBio(userBio: String, userEmail: String)
     func updateUserProfilePicture(userProfilePicture: String, userEmail: String)
+    func updateUserCameraAcceptance(userEmail: String, userCameraAcceptance: String)
     
     // Book
     func deleteBook(book: Book, user: User)
