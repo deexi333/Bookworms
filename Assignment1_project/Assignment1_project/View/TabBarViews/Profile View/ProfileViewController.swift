@@ -14,6 +14,8 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // Database controller
     weak var databaseController: DatabaseProtocol?
     
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
+    
     // Fields from the storyboard
     @IBOutlet weak var detailsSegmentView: UIView!
     @IBOutlet weak var bookSegmentView: UIView!
@@ -28,14 +30,14 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        // Set the tab bar title to profile
-        self.tabBarItem = UITabBarItem(title: "PROFILE", image: nil, selectedImage: nil)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name:UIResponder.keyboardWillChangeFrameNotification, object: nil)
         
         // get the profile picture from the user database entry
         self.profilePicture.image = UIImage(named: loggedOnUser!.userProfilePicture)
-        
-        
+
         // Format the profile picture
         self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
         self.profilePicture.clipsToBounds = true;
@@ -58,18 +60,12 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
     }
     
     @objc func doubleTap(gesture: UITapGestureRecognizer) {
-        let imagePicker: UIImagePickerController = UIImagePickerController()
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            imagePicker.sourceType = .camera
-        }
-        else{
-            imagePicker.sourceType = .savedPhotosAlbum
-        }
-        imagePicker.allowsEditing = true
-        imagePicker.delegate = self
-        present(imagePicker, animated: true, completion: nil)
+        
+        createCheckMessage(title: "'Bookworms' Would Like to Access Your Camera Roll", message: "Bookworms needs to access your camera roll to choose your profile picture")
+       
     }
     
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -120,5 +116,51 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         }
     }
     
+    
+    // REF: https://www.youtube.com/watch?v=4EAGIiu7SFU
+    func createCheckMessage(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        // Creating the yes button
+        alert.addAction(UIAlertAction(title: "Don't Allow", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Allow", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+            
+            self.pickImage()
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func pickImage() {
+        let imagePicker: UIImagePickerController = UIImagePickerController()
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            imagePicker.sourceType = .camera
+        }
+        else{
+            imagePicker.sourceType = .savedPhotosAlbum
+        }
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        
+        present(imagePicker, animated: true, completion: nil)
+    }
+    
+    @objc func keyboard(notification:Notification) {
+        guard let keyboardReact = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
+            return
+        }
+
+        if notification.name == UIResponder.keyboardWillShowNotification ||  notification.name == UIResponder.keyboardWillChangeFrameNotification {
+            self.view.frame.origin.y = -keyboardReact.height
+        }else{
+            self.view.frame.origin.y = 0
+        }
+
+    }
 
 }
+

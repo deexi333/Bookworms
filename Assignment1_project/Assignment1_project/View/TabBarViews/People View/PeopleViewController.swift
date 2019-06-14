@@ -72,9 +72,6 @@ class PeopleViewController: UIViewController, DatabaseListener {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
-        // Set the title of the people tab
-        self.tabBarItem = UITabBarItem(title: "PEOPLE", image: nil, selectedImage: nil)
-        
         // Adding a swipe gesture to the right of the view
         // REF: https://www.youtube.com/watch?v=mhoCulcSbeY#action=share
         let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))

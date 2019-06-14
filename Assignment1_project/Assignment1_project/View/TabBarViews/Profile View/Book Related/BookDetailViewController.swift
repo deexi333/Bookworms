@@ -17,7 +17,6 @@ class BookDetailViewController: UIViewController, DatabaseListener {
         
     }
     
-    
     // MARK: - Variables
     var currentBook: Book?
     var loggedOnUser: User?

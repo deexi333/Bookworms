@@ -36,6 +36,11 @@
 	</array>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Mali-Medium.ttf</string>
+		<string>Mali-Light.ttf</string>
+		<string>Mali-SemiBold.ttf</string>
+		<string>Mali-ExtraLight.ttf</string>
+		<string>Mali-Regular.ttf</string>
 		<string>Komika_Hand_Bold.ttf</string>
 		<string>Komika_Hand.ttf</string>
 	</array>

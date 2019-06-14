@@ -9,44 +9,37 @@
 import UIKit
 
 class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
-    func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {
-        allConversations = []
-        
-        for user in allUsers {
-            if user.userEmail == loggedOnUser?.userEmail {
-                for conversationID in user.userConversations {
-                    for conversation in conversations {
-                        if conversationID == conversation.conversationID {
-                            allConversations.append(conversation)
-                            filteredConversations.append(conversation)
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func onMessageChange(change: DatabaseChange, messages: [Message]) {
-        
-   }
-    
+   
     // MARK: - Variables
+    // Database controller
     weak var databaseController: DatabaseProtocol?
     
+    // The currently logged in user
     var loggedOnUser: User?
+    
+    // Adding the listeners
+    var listenerType = ListenerType.all
 
+    // Elements from the storyboard
     @IBOutlet weak var friendsTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    
+    // All the users in the application
+    var allUsers: [User] = []
+    // All the conversations that the user has
+    var allConversations: [(String, Conversation)] = []
+    // The filtered conversations of the names
+    var filteredConversations: [(String, Conversation)] = []
+    
     
     // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // set the title of the chat tab
-        self.tabBarItem = UITabBarItem(title: "CHAT", image: nil, selectedImage: nil)
+        // Setting the navigation controller title
         self.navigationController?.title = "CHAT"
         
-        // App delegate
+        // Setting the appdelegate
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
@@ -61,32 +54,12 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         friendsTableView.reloadData()
     }
     
-    var listenerType = ListenerType.all
-    
-    let SECTION_FRIENDS = 0
-    let CELL_FRIEND = "friendCell"
-    
-    var allUsers: [User] = []
-    var allConversations: [Conversation] = []
-    var filteredConversations: [Conversation] = []
-    
-    
-    func onUserChange(change: DatabaseChange, users: [User]) {
-        allUsers = users
-    }
-    
-    func onBookChange(change: DatabaseChange, books: [Book]) {
-        
-    }
-    
-    func onGenreChange(change: DatabaseChange, genres: [Genre]) {
-        
-    }
-    
+    // MARK: - The view appear and disappear functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Adds listener
         databaseController?.addListener(listener: self)
+        // Reloading the freinds table view
         self.friendsTableView.reloadData()
     }
     
@@ -94,19 +67,79 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         super.viewWillDisappear(animated)
         // Removes listener
         databaseController?.removeListener(listener: self)
+        // Reloading the friends table view
         self.friendsTableView.reloadData()
     }
     
+    
+    // MARK: - Database Protocols
+    func onUserChange(change: DatabaseChange, users: [User]) {
+        allUsers = users
+    }
+    
+    func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {
+        // All the conversations
+        allConversations = []
+        
+        // Interate through each user
+        for user in allUsers {
+            // If the user is the logged on user
+            if user.userEmail == loggedOnUser?.userEmail {
+                // Iterate throgugh the user conversations
+                for conversationID in user.userConversations {
+                    // Iterate through all the conversations
+                    for conversation in conversations {
+                        // if the conversationID is the id in the conversation
+                        if conversationID == conversation.conversationID {
+                            // String consisting of the names
+                            var names: String = ""
+                            
+                            // Iterate through the conversation emails
+                            for email in conversation.conversationUsers! {
+                                // Iterate through all the users
+                                for user in allUsers {
+                                    // If the email is not the logged in user and if the user email is the email in the conversation
+                                    if  email != loggedOnUser?.userEmail && user.userEmail == email {
+                                        // Append the names together
+                                        names = names + "\(user.userFirstName)" + "\(user.userLastName)" + ", "
+                                    }
+                                }
+                            }
+                            
+                            // Add the conversation and the names as a tuple
+                            allConversations.append((names, conversation))
+                            filteredConversations.append((names, conversation))
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func onMessageChange(change: DatabaseChange, messages: [Message]) { }
+    
+    func onBookChange(change: DatabaseChange, books: [Book]) { }
+    
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
+    
+    
+    // MARK: - Table View
+    // Table view variables
+    let SECTION_FRIENDS = 0
+    let CELL_FRIEND = "friendCell"
+    
+    // Table view functions
+    // Search Functionality
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
         // If the search textis not emptythen get allBooks
-        filteredConversations = searchText.isEmpty ? allConversations : allConversations.filter({(dataString: Conversation) -> Bool in
+        filteredConversations = searchText.isEmpty ? allConversations : allConversations.filter({(dataString: (String, Conversation)) -> Bool in
             // return the entries that have the same name as the search text
-            return dataString.conversationUsers![1].range(of: searchText, options: .caseInsensitive) != nil
+            return dataString.0.range(of: searchText, options: .caseInsensitive) != nil
         })
         
         // reload the data
-        friendsTableView.reloadData()
+        self.friendsTableView.reloadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -126,22 +159,8 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath) as! FriendTableViewCell
         
-        var friend: User = loggedOnUser!
-        
-        for conversation in filteredConversations {
-            for userID in conversation.conversationUsers! {
-                if userID != loggedOnUser?.userEmail {
-                    for user in allUsers {
-                        if user.userEmail == userID {
-                            friend = user
-                        }
-                    }
-                }
-            }
-        }
-        
-        friendCell.friendUserName.text = "\(friend.userFirstName) \(friend.userLastName)"
-        friendCell.friendProfileImage.image = UIImage(named: friend.userProfilePicture)
+        friendCell.friendUserName.text = filteredConversations[indexPath.row].0
+        friendCell.friendProfileImage.image = UIImage(named: "defaultProfilePicture")
         friendCell.friendProfileImage.layer.cornerRadius = friendCell.friendProfileImage.frame.size.width / 2;
         friendCell.friendProfileImage.clipsToBounds = true;
         friendCell.friendProfileImage.layer.borderWidth = 1;
@@ -157,15 +176,15 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         return false
     }
     
+    
     // MARK: - Navigation
-
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
         if segue.identifier == "showMessagesSegue" {
             let destination = segue.destination as! ShowChatViewController
-            destination.currentConversation = self.filteredConversations[friendsTableView.indexPathForSelectedRow!.row]
+            destination.currentConversation = self.filteredConversations[friendsTableView.indexPathForSelectedRow!.row].1
         }
     }
     

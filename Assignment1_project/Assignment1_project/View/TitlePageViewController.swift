@@ -8,14 +8,7 @@
 
 import UIKit
 
-class TitlePageViewController: UIViewController, DatabaseListener {
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
-        
-    }
-    
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
-        
-    }
+class TitlePageViewController: UIViewController, DatabaseListener, UITextFieldDelegate {
     
     
     // MARK: - Variables
@@ -33,8 +26,37 @@ class TitlePageViewController: UIViewController, DatabaseListener {
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     
+    // All the users that are in the application
     var allUsers: [User] = []
     
+ 
+    // MARK: - Functions
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        // Setting the database controller
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        databaseController = appDelegate.databaseController
+        
+        // Setting the keybard delegate
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+    }
+    
+    
+    // MARK: - Keyboard
+    // Return button makes the keyboard dissapear
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    // When the user touches outside the keyboard the keyboard resigns down
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+
     // MARK: - Listener functions
     func onUserChange(change: DatabaseChange, users: [User]) {
         allUsers = users
@@ -45,14 +67,16 @@ class TitlePageViewController: UIViewController, DatabaseListener {
         }
     }
     
-    func onBookChange(change: DatabaseChange, books: [Book]) {
-        
-    }
+    func onBookChange(change: DatabaseChange, books: [Book]) { }
     
-    func onGenreChange(change: DatabaseChange, genres: [Genre]) {
-        
-    }
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
     
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) { }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) { }
+    
+    
+    // MARK: - The View appear and disappear functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Adds listener
@@ -65,15 +89,34 @@ class TitlePageViewController: UIViewController, DatabaseListener {
         databaseController?.removeListener(listener: self)
     }
     
-    // MARK: - Functions
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        databaseController = appDelegate.databaseController
-    }
     
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // check the segue
+        if segue.identifier == "signInSegue" {
+            
+            let tabbarController = segue.destination as! UITabBarController
+            
+            // Hides the back button so that the user cannot go back to the login page
+            tabbarController.navigationItem.setHidesBackButton(true, animated:true)
+            
+            // Set the user in the profile view
+            let profile = tabbarController.viewControllers![2] as! ProfileViewController
+            profile.loggedOnUser = self.loggedOnUser
+            
+            // Set the user in the people view
+            let people = tabbarController.viewControllers![0] as! PeopleViewController
+            people.loggedOnUser = self.loggedOnUser
+            
+            // Set the user in the chat view
+            let chat = tabbarController.viewControllers![1] as! ChatViewController
+            chat.loggedOnUser = self.loggedOnUser
+            
+            // Set the tabbar to the people view
+            tabbarController.selectedIndex = 2
+        }
+    }
     
     // Checks whether or not a certain segue should be performed
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
@@ -112,7 +155,7 @@ class TitlePageViewController: UIViewController, DatabaseListener {
                 errorLabel.textColor = UIColor.red
                 return false
             }
-            
+                
             else {
                 // Get all the users from the database
                 let registeredUsers = allUsers
@@ -132,32 +175,5 @@ class TitlePageViewController: UIViewController, DatabaseListener {
             return true
         }
         return true
-    }
-    
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        // check the segue
-        if segue.identifier == "signInSegue" {
-            
-            let tabbarController = segue.destination as! UITabBarController
-            tabbarController.navigationItem.setHidesBackButton(true, animated:true)
-            
-            // Set the user in the profile view
-            let profile = tabbarController.viewControllers![2] as! ProfileViewController
-            profile.loggedOnUser = self.loggedOnUser
-            
-            // Set the user in the people view
-            let people = tabbarController.viewControllers![0] as! PeopleViewController
-            people.loggedOnUser = self.loggedOnUser
-            
-            // Set the user in the chat view
-            let chat = tabbarController.viewControllers![1] as! ChatViewController
-            chat.loggedOnUser = self.loggedOnUser
-            
-            // Set the tabbar to the people view
-            tabbarController.selectedIndex = 2
-        }
     }
 }

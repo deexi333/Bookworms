@@ -10,18 +10,19 @@ import UIKit
 
 class FriendTableViewCell: UITableViewCell {
     
+    // MARK: - Variables
+    // Elements from the storyboard
     @IBOutlet weak var friendUserName: UILabel!
     @IBOutlet weak var friendProfileImage: UIImageView!
     
+    
+    // MARK: - Functions
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }

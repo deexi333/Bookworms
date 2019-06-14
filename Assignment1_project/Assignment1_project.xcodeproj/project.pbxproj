@@ -37,6 +37,11 @@
 		C1D54611227F219700A89172 /* TitlePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D54610227F219700A89172 /* TitlePageViewController.swift */; };
 		C1D54613227F21B300A89172 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D54612227F21B300A89172 /* SignUpViewController.swift */; };
 		D86202272288F6BB003A2E25 /* AddUserDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86202262288F6BB003A2E25 /* AddUserDelegate.swift */; };
+		D89F7AA022B374B800B32B86 /* Mali-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D89F7A9F22B374B800B32B86 /* Mali-Medium.ttf */; };
+		D89F7AA222B374CC00B32B86 /* Mali-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D89F7AA122B374CC00B32B86 /* Mali-Regular.ttf */; };
+		D89F7AA422B374DD00B32B86 /* Mali-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D89F7AA322B374DD00B32B86 /* Mali-SemiBold.ttf */; };
+		D89F7AA622B374E600B32B86 /* Mali-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D89F7AA522B374E600B32B86 /* Mali-Light.ttf */; };
+		D89F7AA822B374EB00B32B86 /* Mali-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D89F7AA722B374EB00B32B86 /* Mali-ExtraLight.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +79,11 @@
 		C1D54610227F219700A89172 /* TitlePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitlePageViewController.swift; sourceTree = "<group>"; };
 		C1D54612227F21B300A89172 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		D86202262288F6BB003A2E25 /* AddUserDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddUserDelegate.swift; sourceTree = "<group>"; };
+		D89F7A9F22B374B800B32B86 /* Mali-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mali-Medium.ttf"; sourceTree = "<group>"; };
+		D89F7AA122B374CC00B32B86 /* Mali-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mali-Regular.ttf"; sourceTree = "<group>"; };
+		D89F7AA322B374DD00B32B86 /* Mali-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mali-SemiBold.ttf"; sourceTree = "<group>"; };
+		D89F7AA522B374E600B32B86 /* Mali-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mali-Light.ttf"; sourceTree = "<group>"; };
+		D89F7AA722B374EB00B32B86 /* Mali-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Mali-ExtraLight.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -225,7 +235,12 @@
 		C1D5460B227F1FC800A89172 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				D89F7A9F22B374B800B32B86 /* Mali-Medium.ttf */,
+				D89F7AA522B374E600B32B86 /* Mali-Light.ttf */,
+				D89F7AA322B374DD00B32B86 /* Mali-SemiBold.ttf */,
+				D89F7AA722B374EB00B32B86 /* Mali-ExtraLight.ttf */,
 				C1D5460C227F1FF400A89172 /* Komika_Hand_Bold.ttf */,
+				D89F7AA122B374CC00B32B86 /* Mali-Regular.ttf */,
 				C1D5460E227F1FFE00A89172 /* Komika_Hand.ttf */,
 			);
 			path = Fonts;
@@ -316,11 +331,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D89F7AA622B374E600B32B86 /* Mali-Light.ttf in Resources */,
 				C1D54603227F1F9000A89172 /* LaunchScreen.storyboard in Resources */,
 				C1D54600227F1F9000A89172 /* Assets.xcassets in Resources */,
 				C1D5460D227F1FF400A89172 /* Komika_Hand_Bold.ttf in Resources */,
+				D89F7AA022B374B800B32B86 /* Mali-Medium.ttf in Resources */,
+				D89F7AA822B374EB00B32B86 /* Mali-ExtraLight.ttf in Resources */,
 				C1D545FE227F1F8F00A89172 /* Main.storyboard in Resources */,
 				C1D5460F227F1FFF00A89172 /* Komika_Hand.ttf in Resources */,
+				D89F7AA222B374CC00B32B86 /* Mali-Regular.ttf in Resources */,
+				D89F7AA422B374DD00B32B86 /* Mali-SemiBold.ttf in Resources */,
 				C120CDE1227FDB5B00CC7E02 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

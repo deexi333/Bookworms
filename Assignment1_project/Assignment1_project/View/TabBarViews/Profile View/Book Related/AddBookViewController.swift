@@ -30,8 +30,16 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
     var loggedOnUser: User?
     
     // MARK: - Functions
+    
+    func loadData() {
+        // code to load data from network, and refresh the interface
+        allBooksTableView.reloadData()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("viewDidLoad was called")
         
         // App delegate
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -45,7 +53,7 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         allBooksTableView.reloadData()
         allBooksTableView.delegate  = self
         allBooksTableView.dataSource = self
-        allBooksTableView.reloadData()
+        self.loadData()
     }
     
     // MARK: - Table View Content
@@ -108,21 +116,22 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
         })
         
         // reload the data
-        allBooksTableView.reloadData()
+        self.loadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Adds listener
+        print("viewWillAppear was called")
         databaseController?.addListener(listener: self)
-        self.allBooksTableView.reloadData()
+        self.loadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Removes listener
         databaseController?.removeListener(listener: self)
-        self.allBooksTableView.reloadData()
+        self.loadData()
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {

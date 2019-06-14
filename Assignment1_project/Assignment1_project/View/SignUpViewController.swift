@@ -21,8 +21,8 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
     // The user that has logged on
     var loggedOnUser: User?
     
-    // DataListener Variables
-    var allUsers: [User] = []
+    // Active field to see what text field has been selected
+    var activeField: UITextField?
     
     // TextFields from the story board
     @IBOutlet weak var userFirstNameTextField: UITextField!
@@ -32,45 +32,10 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
     @IBOutlet weak var userEmailTextField: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     
-    // MARK: - Listener functions
-    func onUserChange(change: DatabaseChange, users: [User]) {
-        allUsers = users
-        
-        for user in users {
-            if user.userEmail == loggedOnUser?.userEmail {
-                loggedOnUser = user
-            }
-        }
-    }
+    // DataListener Variables
+    var allUsers: [User] = []
     
-    func onBookChange(change: DatabaseChange, books: [Book]) {
-        
-    }
-    
-    func onGenreChange(change: DatabaseChange, genres: [Genre]) {
-        
-    }
-    
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
-        
-    }
-    
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Adds listener
-        databaseController?.addListener(listener: self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Removes listener
-        databaseController?.removeListener(listener: self)
-    }
-    
+   
     // MARK: - Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,15 +52,74 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
         userReenterPasswordTextField.delegate = self
     }
     
-    // Keyboard
+    // MARK: - Keyboard
+    // Return button makes the keyboard dissapear
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
     
-    // Button to sign Up --- can remove
-    @IBAction func signUpButton(_ sender: Any) {
+    // When the user touches outside the keyboard the keyboard resigns down
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+
+    // MARK: - Listener functions
+    func onUserChange(change: DatabaseChange, users: [User]) {
+        allUsers = users
         
+        for user in users {
+            if user.userEmail == loggedOnUser?.userEmail {
+                loggedOnUser = user
+            }
+        }
+    }
+    
+    func onBookChange(change: DatabaseChange, books: [Book]) { }
+    
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
+    
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) { }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) { }
+    
+    
+    // MARK: - The View appear and disappear functions
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Adds listener
+        databaseController?.addListener(listener: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Removes listener
+        databaseController?.removeListener(listener: self)
+    }
+    
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "signUpSegue" {
+            let tabbarController = segue.destination as! UITabBarController
+            tabbarController.navigationItem.setHidesBackButton(true, animated:true)
+            
+            // Set the user in the profile view
+            let profile = tabbarController.viewControllers![2] as! ProfileViewController
+            profile.loggedOnUser = self.loggedOnUser
+            
+            // Set the user in the people view
+            let people = tabbarController.viewControllers![0] as! PeopleViewController
+            people.loggedOnUser = self.loggedOnUser
+            
+            // Set the user in the chat view
+            let chat = tabbarController.viewControllers![1] as! ChatViewController
+            chat.loggedOnUser = self.loggedOnUser
+            
+            // Set the tabbar to the people view
+            tabbarController.selectedIndex = 2
+        }
     }
     
     // Checks whether the segue should be performed
@@ -170,7 +194,7 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
                 errorLabel.textColor = UIColor.red
                 return false
             }
-        
+            
             // add the new user to the database
             self.loggedOnUser = databaseController?.addUser(userFirstName: firstName!, userLastName: lastName!, userEmail: email!, userPassword: password!)
             
@@ -178,29 +202,5 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
         }
         return true
     }
-    
-    
-    // MARK: - Navigation
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "signUpSegue" {
-            let tabbarController = segue.destination as! UITabBarController
-            tabbarController.navigationItem.setHidesBackButton(true, animated:true)
-            
-            // Set the user in the profile view
-            let profile = tabbarController.viewControllers![2] as! ProfileViewController
-            profile.loggedOnUser = self.loggedOnUser
-            
-            // Set the user in the people view
-            let people = tabbarController.viewControllers![0] as! PeopleViewController
-            people.loggedOnUser = self.loggedOnUser
-            
-            // Set the user in the chat view
-            let chat = tabbarController.viewControllers![1] as! ChatViewController
-            chat.loggedOnUser = self.loggedOnUser
-            
-            // Set the tabbar to the people view
-            tabbarController.selectedIndex = 2
-        }
-    }
 }
+
