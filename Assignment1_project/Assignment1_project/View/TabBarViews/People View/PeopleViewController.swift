@@ -29,13 +29,20 @@ class PeopleViewController: UIViewController, DatabaseListener {
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var profileView: UIView!
     
-    var userTrack = 0
+    // variables to save the UIViews
+    var detailsView: DetailsSegementViewController?
+    var bookView: BookSegmentViewController?
     
+    // tracking the index of the tracked user
+    var userTrack = 0
     // the user that is currently logged on
     var loggedOnUser: User?
+    // the tracked user
     var trackUser: User?
+    // All the users in the databases
     var allUsers: [User]?
     
+    // Listeners
     var listenerType = ListenerType.all
     
     func onUserChange(change: DatabaseChange, users: [User]) {
@@ -147,17 +154,21 @@ class PeopleViewController: UIViewController, DatabaseListener {
         // check the segue and go to the detailsSegmentViewController
     
         if segue.identifier == "peopleDetailsProfileSegue" {
-            let uiView = segue.destination as! DetailsSegementViewController
-            uiView.selectView = "People"
-            uiView.trackUser = self.loggedOnUser
-            uiView.loggedOnUser = self.loggedOnUser
+            DispatchQueue.main.async {
+                self.detailsView = (segue.destination as! DetailsSegementViewController)
+                self.detailsView!.selectView = "People"
+                self.detailsView!.trackUser = self.loggedOnUser
+                self.detailsView!.loggedOnUser = self.loggedOnUser
+            }
         }
         
         if segue.identifier == "peopleBookSegementSegue" {
-            let uiView = segue.destination as! BookSegmentViewController
-            uiView.selectView = "People"
-            uiView.trackUser = self.loggedOnUser
-            uiView.loggedOnUser = self.loggedOnUser
+            DispatchQueue.main.async {
+                self.bookView = (segue.destination as! BookSegmentViewController)
+                self.bookView!.selectView = "People"
+                self.bookView!.trackUser = self.loggedOnUser
+                self.bookView!.loggedOnUser = self.loggedOnUser
+            }
         }
         
         if segue.identifier == "addFriendSegue" {
@@ -183,8 +194,9 @@ class PeopleViewController: UIViewController, DatabaseListener {
         self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
         self.profilePicture.clipsToBounds = true;
         self.profilePicture.layer.borderWidth = 1;
-        print("this is called swipe." + "\(trackUser!.userEmail)")
         
+        self.detailsView?.trackUser = trackUser
+        self.bookView?.trackUser = trackUser
         
     }
 }

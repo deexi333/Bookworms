@@ -181,6 +181,5 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
             destination.loggedOnUser = self.loggedOnUser
         }
     }
-    
 
 }
