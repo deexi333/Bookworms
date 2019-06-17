@@ -9,22 +9,15 @@
 import UIKit
 
 class DetailsSegementViewController: UIViewController, UITextViewDelegate, DatabaseListener {
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
-        
-    }
-    
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
-        
-    }
-    
-    
+   
     // MARK: - Variables
     // The listener
-    var listenerType = ListenerType.user
+    var listenerType = ListenerType.all
 
     // Database controller
     weak var databaseController: DatabaseProtocol?
     
+    // variables to track the user and the view that is being used
     var selectView: String?         // the view to check whether it is profile and people view controller
     var loggedOnUser: User?         // currently logged on user
     var trackUser: User?            // Users potential friend
@@ -35,8 +28,8 @@ class DetailsSegementViewController: UIViewController, UITextViewDelegate, Datab
     @IBOutlet weak var userNameLabel: UILabel!
     @IBOutlet weak var bioTextView: UITextView!
     
-    // MARK: - Functions
     
+    // MARK: - Functions
     override func viewDidLoad() {
          super.viewDidLoad()
         
@@ -63,42 +56,8 @@ class DetailsSegementViewController: UIViewController, UITextViewDelegate, Datab
         }
     }
     
-    // Database listener
-    func onUserChange(change: DatabaseChange, users: [User]) {
-        for user in users {
-            if user.userEmail == loggedOnUser?.userEmail {
-                self.loggedOnUser = user
-            }
-            
-            if user.userEmail == trackUser?.userEmail {
-                self.trackUser = user
-            }
-        }
-        
-        allUsers = users
-    }
     
-    func onBookChange(change: DatabaseChange, books: [Book]) {
-        
-    }
-    
-    func onGenreChange(change: DatabaseChange, genres: [Genre]) {
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        // Adds listener
-        databaseController?.addListener(listener: self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        // Removes listener
-        databaseController?.removeListener(listener: self)
-    }
-    
-    // keyboard
+    // MARK: - fixing keyboard
     func textViewShouldReturn(_ textView: UITextView) -> Bool {
         textView.resignFirstResponder()
         return true
@@ -111,6 +70,46 @@ class DetailsSegementViewController: UIViewController, UITextViewDelegate, Datab
         if selectView != "People" {
             databaseController!.updateUserBio(userBio: bioTextView.text, userEmail: (loggedOnUser?.userEmail)!)
         }
+    }
+    
+    
+    // MARK: - Database protocol
+    func onUserChange(change: DatabaseChange, users: [User]) {
+        // For all the users in the database
+        for user in users {
+            // get the updated logged on user
+            if user.userEmail == loggedOnUser?.userEmail {
+                self.loggedOnUser = user
+            }
+            // get the updated track user
+            if user.userEmail == trackUser?.userEmail {
+                self.trackUser = user
+            }
+        }
+        
+        allUsers = users
+    }
+    
+    func onBookChange(change: DatabaseChange, books: [Book]) { }
+    
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
+    
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) { }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) { }
+    
+    
+    // MARK: - View will appear and disappear
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // Adds listener
+        databaseController?.addListener(listener: self)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // Removes listener
+        databaseController?.removeListener(listener: self)
     }
     
     /*

@@ -9,15 +9,7 @@
 import UIKit
 
 class PeopleViewController: UIViewController, DatabaseListener {
-    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) {
-        
-    }
     
-    func onMessageChange(change: DatabaseChange, messages genres: [Message]) {
-        
-    }
-    
-
     // MARK: - Variables
     // Database controller
     weak var databaseController: DatabaseProtocol?
@@ -28,6 +20,7 @@ class PeopleViewController: UIViewController, DatabaseListener {
     @IBOutlet weak var segmentController: UISegmentedControl!
     @IBOutlet weak var profilePicture: UIImageView!
     @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var errorView: UIView!
     
     // variables to save the UIViews
     var detailsView: DetailsSegementViewController?
@@ -45,50 +38,6 @@ class PeopleViewController: UIViewController, DatabaseListener {
     // Listeners
     var listenerType = ListenerType.all
     
-    func onUserChange(change: DatabaseChange, users: [User]) {
-        allUsers = []
-        
-        for user in users {
-            if user.userEmail == loggedOnUser!.userEmail {
-                loggedOnUser = user
-            }
-        }
-        
-        for user in users {
-            if user.userEmail != loggedOnUser?.userEmail {
-                if user.userFriends.count > 0 {
-                    for friend in user.userFriends {
-                        if friend != user.userEmail {
-                            allUsers?.append(user)
-                        }
-                    }
-                }
-                
-                else {
-                    allUsers?.append(user)
-                }
-            }
-        }
-        
-        if allUsers!.count > 0 {
-            // get the first user
-            trackUser = allUsers![userTrack]
-            self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
-            
-            // Format the profile picture
-            self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
-            self.profilePicture.clipsToBounds = true;
-            self.profilePicture.layer.borderWidth = 1;
-        }
-    }
-    
-    func onBookChange(change: DatabaseChange, books: [Book]) {
-        
-    }
-    
-    func onGenreChange(change: DatabaseChange, genres: [Genre]) {
-        
-    }
     
     // MARK: - Functions
     override func viewDidLoad() {
@@ -110,8 +59,78 @@ class PeopleViewController: UIViewController, DatabaseListener {
         bookSegmentView.isHidden = true
     }
     
-
-    // Change depending on what segment
+    
+    // MARK: - Database protocol
+    func onUserChange(change: DatabaseChange, users: [User]) {
+        allUsers = []
+        
+        for user in users {
+            if user.userEmail == loggedOnUser!.userEmail {
+                loggedOnUser = user
+            }
+        }
+        
+        for user in users {
+            if user.userEmail != loggedOnUser?.userEmail {
+                
+                if (loggedOnUser?.userFriends.count)! > 0 {
+                    for friend in loggedOnUser!.userFriends {
+                        if user.userEmail != friend {
+                            allUsers?.append(user)
+                        }
+                    }
+                }
+                
+                else {
+                    allUsers?.append(user)
+                }
+            }
+        }
+        
+        
+        if users.count == 1 {
+            errorView.isHidden = false
+            profileView.isHidden = true
+        }
+            
+        if allUsers?.count == 0 {
+            errorView.isHidden = false
+            profileView.isHidden = true
+        }
+        
+        else {
+            errorView.isHidden = true
+            profileView.isHidden = false
+            
+            // get the first user
+            trackUser = allUsers![userTrack]
+            self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
+            
+            // Format the profile picture
+            self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
+            self.profilePicture.clipsToBounds = true;
+            self.profilePicture.layer.borderWidth = 1;
+            
+            // View did load called for the details view
+            self.detailsView?.trackUser = trackUser
+            self.detailsView?.viewDidLoad()
+            
+            // View did load called for the book view
+            self.bookView?.trackUser = trackUser
+            self.bookView?.viewDidLoad()
+        }
+    }
+    
+    func onBookChange(change: DatabaseChange, books: [Book]) { }
+    
+    func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
+    
+    func onConversationChange(change: DatabaseChange, conversations genres: [Conversation]) { }
+    
+    func onMessageChange(change: DatabaseChange, messages genres: [Message]) { }
+    
+  
+    // MARK: - Segment controller
     @IBAction func onSegmentChange(_ sender: Any) {
         switch  segmentController.selectedSegmentIndex {
         // If segment is the details view
@@ -129,12 +148,43 @@ class PeopleViewController: UIViewController, DatabaseListener {
         }
     }
     
+    
+    // MARK: - Gesture swipe
+    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
+        if userTrack == allUsers!.count - 1 {
+            userTrack = 0
+        }
+            
+        else {
+            userTrack += 1
+        }
+        
+        trackUser = allUsers![userTrack]
+        self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
+        
+        // Format the profile picture
+        self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
+        self.profilePicture.clipsToBounds = true;
+        self.profilePicture.layer.borderWidth = 1;
+        
+        self.detailsView?.trackUser = trackUser
+        self.detailsView?.viewDidLoad()
+        
+        self.bookView?.trackUser = trackUser
+        self.bookView?.viewDidLoad()
+        
+    }
+    
+    
+    // Once the message button is pressed
     @IBAction func addFriendToUser(_ sender: Any) {
         let _ = databaseController!.addFriendToUser(userEmail: loggedOnUser!.userEmail, friendEmail: trackUser!.userEmail)
         let _ = databaseController!.addConversation(userEmail: loggedOnUser!.userEmail, friendEmail: trackUser!.userEmail)
         let _ = self.tabBarController!.viewControllers![1] as! ChatViewController
     }
     
+    
+    // MARK: - View will appear and disappear functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         // Adds listener
@@ -149,26 +199,21 @@ class PeopleViewController: UIViewController, DatabaseListener {
 
     
     // MARK: - Navigation
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // check the segue and go to the detailsSegmentViewController
     
         if segue.identifier == "peopleDetailsProfileSegue" {
-            DispatchQueue.main.async {
-                self.detailsView = (segue.destination as! DetailsSegementViewController)
-                self.detailsView!.selectView = "People"
-                self.detailsView!.trackUser = self.loggedOnUser
-                self.detailsView!.loggedOnUser = self.loggedOnUser
-            }
+            self.detailsView = (segue.destination as! DetailsSegementViewController)
+            self.detailsView!.selectView = "People"
+            self.detailsView!.trackUser = self.loggedOnUser
+            self.detailsView!.loggedOnUser = self.loggedOnUser
         }
         
         if segue.identifier == "peopleBookSegementSegue" {
-            DispatchQueue.main.async {
-                self.bookView = (segue.destination as! BookSegmentViewController)
-                self.bookView!.selectView = "People"
-                self.bookView!.trackUser = self.loggedOnUser
-                self.bookView!.loggedOnUser = self.loggedOnUser
-            }
+            self.bookView = (segue.destination as! BookSegmentViewController)
+            self.bookView!.selectView = "People"
+            self.bookView!.trackUser = self.loggedOnUser
+            self.bookView!.loggedOnUser = self.loggedOnUser
         }
         
         if segue.identifier == "addFriendSegue" {
@@ -176,28 +221,6 @@ class PeopleViewController: UIViewController, DatabaseListener {
             let chatViewController = tabBarController?.viewControllers?[1] as! ChatViewController
             chatViewController.loggedOnUser = self.loggedOnUser
         }
-    }
-    
-    @objc func swipeAction(swipe: UISwipeGestureRecognizer) {
-        if userTrack == allUsers!.count - 1 {
-            userTrack = 0
-        }
-        
-        else {
-            userTrack += 1
-        }
-        
-        trackUser = allUsers![userTrack]
-        self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
-        
-        // Format the profile picture
-        self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
-        self.profilePicture.clipsToBounds = true;
-        self.profilePicture.layer.borderWidth = 1;
-        
-        self.detailsView?.trackUser = trackUser
-        self.bookView?.trackUser = trackUser
-        
     }
 }
 

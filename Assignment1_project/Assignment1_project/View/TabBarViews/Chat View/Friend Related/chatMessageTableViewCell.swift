@@ -12,6 +12,7 @@ class ChatMessageTableViewCell: UITableViewCell {
 
     // MARK: - Variables
     // Element from the storyboard
+    @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var messageLabel: UILabel!
     
     

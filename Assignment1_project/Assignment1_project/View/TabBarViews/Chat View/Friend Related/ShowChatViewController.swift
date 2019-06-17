@@ -128,6 +128,7 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
         let message = allMessages[indexPath.row]
         
         messageCell.messageLabel.text = "\(message.messageSent)"
+        messageCell.nameLabel.text = "\(message.messageSender)"
         
         return messageCell
     }

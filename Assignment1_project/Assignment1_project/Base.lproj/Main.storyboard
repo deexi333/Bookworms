@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aaB-Hi-dOa">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="aaB-Hi-dOa">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -341,7 +341,7 @@
             </objects>
             <point key="canvasLocation" x="1061.5999999999999" y="3078.7106446776615"/>
         </scene>
-        <!--Title-->
+        <!--Chat-->
         <scene sceneID="0Cl-mj-8Ps">
             <objects>
                 <viewController id="JvQ-9a-RZe" customClass="ShowChatViewController" customModule="Assignment1_project" customModuleProvider="target" sceneMemberID="viewController">
@@ -353,29 +353,39 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="530"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatMessageCell" id="mhz-eC-8L0" customClass="ChatMessageTableViewCell" customModule="Assignment1_project" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="chatMessageCell" rowHeight="110" id="mhz-eC-8L0" customClass="ChatMessageTableViewCell" customModule="Assignment1_project" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="110"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mhz-eC-8L0" id="ZSC-is-Diq">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="109.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzw-Ir-OdN">
-                                                    <rect key="frame" x="15" y="11" width="345" height="22"/>
-                                                    <fontDescription key="fontDescription" name="Mali-Regular" family="Mali" pointSize="17"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzw-Ir-OdN">
+                                                    <rect key="frame" x="15" y="11" width="345" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Mali-SemiBold" family="Mali SemiBold" pointSize="15"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Message" lineBreakMode="tailTruncation" numberOfLines="50" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hwj-od-UY4">
+                                                    <rect key="frame" x="15" y="36" width="345" height="63"/>
+                                                    <fontDescription key="fontDescription" name="Mali-Regular" family="Mali" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Hzw-Ir-OdN" firstAttribute="bottom" secondItem="ZSC-is-Diq" secondAttribute="bottomMargin" id="7hQ-2C-MoK"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Hzw-Ir-OdN" secondAttribute="trailing" id="J5B-5l-c8G"/>
-                                                <constraint firstItem="Hzw-Ir-OdN" firstAttribute="top" secondItem="ZSC-is-Diq" secondAttribute="topMargin" id="j7k-7P-264"/>
-                                                <constraint firstItem="Hzw-Ir-OdN" firstAttribute="leading" secondItem="ZSC-is-Diq" secondAttribute="leadingMargin" id="wAW-eo-V2y"/>
+                                                <constraint firstItem="hwj-od-UY4" firstAttribute="leading" secondItem="ZSC-is-Diq" secondAttribute="leadingMargin" id="0rw-aL-8uT"/>
+                                                <constraint firstItem="hwj-od-UY4" firstAttribute="trailing" secondItem="ZSC-is-Diq" secondAttribute="trailingMargin" id="2ok-Hp-jcd"/>
+                                                <constraint firstItem="hwj-od-UY4" firstAttribute="bottom" secondItem="ZSC-is-Diq" secondAttribute="bottomMargin" constant="5" id="a6t-qn-WXE"/>
+                                                <constraint firstItem="Hzw-Ir-OdN" firstAttribute="leading" secondItem="ZSC-is-Diq" secondAttribute="leadingMargin" id="f43-I0-Pe6"/>
+                                                <constraint firstItem="Hzw-Ir-OdN" firstAttribute="top" secondItem="ZSC-is-Diq" secondAttribute="topMargin" id="fCP-hG-uog"/>
+                                                <constraint firstItem="hwj-od-UY4" firstAttribute="top" secondItem="Hzw-Ir-OdN" secondAttribute="bottom" constant="5" id="g0c-yW-Zcn"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Hzw-Ir-OdN" secondAttribute="trailing" id="urX-0k-BRr"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="messageLabel" destination="Hzw-Ir-OdN" id="kFp-2K-qvr"/>
+                                            <outlet property="messageLabel" destination="hwj-od-UY4" id="QsI-ZQ-Bmr"/>
+                                            <outlet property="nameLabel" destination="Hzw-Ir-OdN" id="1ci-FM-d1O"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -385,7 +395,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="tintColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Mali-Regular" family="Mali" pointSize="15"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nSv-WB-i46">
                                 <rect key="frame" x="323" y="614" width="42" height="33"/>
@@ -411,7 +421,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="tas-af-DA4"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="x4W-Q8-bbU">
+                    <navigationItem key="navigationItem" title="Chat" id="x4W-Q8-bbU">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="settings-cog" landscapeImage="settings-cog" largeContentSizeImage="settings-cog" id="eMI-lC-9RM">
                             <color key="tintColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
@@ -518,6 +528,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mfg-AA-BmI" userLabel="Error View">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="There seems to be no one to add currently" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hcG-u7-cVJ">
+                                        <rect key="frame" x="16" y="50" width="343" height="44.5"/>
+                                        <fontDescription key="fontDescription" name="Mali-SemiBold" family="Mali SemiBold" pointSize="17"/>
+                                        <color key="textColor" red="0.54309445619999996" green="0.72541040180000005" blue="0.32221281530000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="hcG-u7-cVJ" firstAttribute="top" secondItem="mfg-AA-BmI" secondAttribute="top" constant="50" id="725-SU-WhP"/>
+                                    <constraint firstAttribute="trailing" secondItem="hcG-u7-cVJ" secondAttribute="trailing" constant="16" id="dD3-lV-cQa"/>
+                                    <constraint firstItem="hcG-u7-cVJ" firstAttribute="leading" secondItem="mfg-AA-BmI" secondAttribute="leading" constant="16" id="mY6-SN-nef"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecP-48-uLu">
                                 <rect key="frame" x="0.0" y="64" width="375" height="554"/>
                                 <subviews>
@@ -553,7 +580,7 @@
                                     </containerView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nnh-iJ-hsa">
                                         <rect key="frame" x="0.0" y="507" width="375" height="47"/>
-                                        <color key="backgroundColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.54117647058823526" green="0.72549019607843135" blue="0.32156862745098036" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <fontDescription key="fontDescription" name="Mali-SemiBold" family="Mali SemiBold" pointSize="25"/>
                                         <state key="normal" title="MESSAGE">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -587,8 +614,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="mfg-AA-BmI" firstAttribute="leading" secondItem="Qnt-7W-26m" secondAttribute="leading" id="83b-XY-DNx"/>
+                            <constraint firstItem="mfg-AA-BmI" firstAttribute="trailing" secondItem="Qnt-7W-26m" secondAttribute="trailing" id="Gbe-SK-dzS"/>
                             <constraint firstItem="ecP-48-uLu" firstAttribute="bottom" secondItem="Qnt-7W-26m" secondAttribute="bottom" id="Hua-1e-FHe"/>
+                            <constraint firstItem="mfg-AA-BmI" firstAttribute="bottom" secondItem="Qnt-7W-26m" secondAttribute="bottom" id="OnI-Tb-n8M"/>
                             <constraint firstItem="ecP-48-uLu" firstAttribute="trailing" secondItem="Qnt-7W-26m" secondAttribute="trailing" id="agA-fb-sBl"/>
+                            <constraint firstItem="mfg-AA-BmI" firstAttribute="top" secondItem="Qnt-7W-26m" secondAttribute="top" id="bfa-q7-Ojp"/>
                             <constraint firstItem="ecP-48-uLu" firstAttribute="leading" secondItem="Qnt-7W-26m" secondAttribute="leading" id="kNR-M5-WIh"/>
                             <constraint firstItem="ecP-48-uLu" firstAttribute="top" secondItem="Qnt-7W-26m" secondAttribute="top" id="xam-7R-fMm"/>
                         </constraints>
@@ -598,6 +629,7 @@
                     <connections>
                         <outlet property="bookSegmentView" destination="uIh-ta-pQz" id="4DH-fp-dUE"/>
                         <outlet property="detailsSegmentView" destination="Jza-0F-o2G" id="Ac1-WM-DLd"/>
+                        <outlet property="errorView" destination="mfg-AA-BmI" id="QuW-kL-YxS"/>
                         <outlet property="profilePicture" destination="KE1-Cg-pHq" id="XUC-v5-csO"/>
                         <outlet property="profileView" destination="ecP-48-uLu" id="Xj0-Zq-C97"/>
                         <outlet property="segmentController" destination="ZN4-mW-QJj" id="YhT-Ah-tu5"/>
@@ -650,7 +682,7 @@
             <objects>
                 <viewController id="Wsa-fP-enw" customClass="DetailsSegementViewController" customModule="Assignment1_project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NBX-3N-Ov3">
-                        <rect key="frame" x="0.0" y="0.0" width="315" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="315" height="313"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="NAME" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="61r-kE-yvZ">
@@ -672,10 +704,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WIw-Xc-fRk">
-                                <rect key="frame" x="26" y="158" width="263" height="202"/>
+                                <rect key="frame" x="26" y="158" width="263" height="155"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <fontDescription key="fontDescription" name="Mali-Regular" family="Mali" pointSize="17"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
                             </textView>
                         </subviews>
                         <constraints>
@@ -709,11 +741,11 @@
             <objects>
                 <viewController id="gGo-Ff-wO4" customClass="BookSegmentViewController" customModule="Assignment1_project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nH2-Z7-vw8">
-                        <rect key="frame" x="0.0" y="0.0" width="315" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="315" height="313"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CyR-L6-Bkr">
-                                <rect key="frame" x="0.0" y="0.0" width="315" height="360"/>
+                                <rect key="frame" x="0.0" y="0.0" width="315" height="313"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="KIK-ZY-c0L">
                                     <rect key="frame" x="0.0" y="0.0" width="315" height="44"/>
@@ -810,14 +842,14 @@
             <objects>
                 <viewController id="IQM-PY-oqt" customClass="BookDetailViewController" customModule="Assignment1_project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="OQN-Tc-RBi">
-                        <rect key="frame" x="0.0" y="0.0" width="315" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="315" height="313"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sq4-1A-2ep">
-                                <rect key="frame" x="0.0" y="0.0" width="315" height="324"/>
+                                <rect key="frame" x="0.0" y="0.0" width="315" height="277"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ln6-Cl-GDc" userLabel="Content View">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="324"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="277"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jzm-G3-tAl">
                                                 <rect key="frame" x="16" y="20" width="283" height="26"/>
@@ -908,7 +940,7 @@
                                 </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H79-BS-qJG">
-                                <rect key="frame" x="0.0" y="322" width="315" height="38"/>
+                                <rect key="frame" x="0.0" y="275" width="315" height="38"/>
                                 <color key="backgroundColor" red="0.41960784309999999" green="0.69411764710000001" blue="0.18823529410000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Mali-SemiBold" family="Mali SemiBold" pointSize="20"/>
                                 <state key="normal" title="ADD BOOK">
@@ -949,11 +981,11 @@
             <objects>
                 <viewController id="D8k-1h-xgG" customClass="AddBookViewController" customModule="Assignment1_project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ktR-O4-nK5">
-                        <rect key="frame" x="0.0" y="0.0" width="315" height="360"/>
+                        <rect key="frame" x="0.0" y="0.0" width="315" height="313"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="sq7-TO-wb8">
-                                <rect key="frame" x="0.0" y="0.0" width="315" height="360"/>
+                                <rect key="frame" x="0.0" y="0.0" width="315" height="313"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <searchBar key="tableHeaderView" contentMode="redraw" id="CtC-E9-jka">
@@ -970,13 +1002,13 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Book" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zGM-GM-bee">
-                                                    <rect key="frame" x="10" y="7" width="275.5" height="35.5"/>
+                                                    <rect key="frame" x="10" y="7" width="271.5" height="35.5"/>
                                                     <fontDescription key="fontDescription" name="Mali-SemiBold" family="Mali SemiBold" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&gt;" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tBF-mD-NLG">
-                                                    <rect key="frame" x="303.5" y="0.0" width="6.5" height="49.5"/>
+                                                    <rect key="frame" x="299.5" y="0.0" width="10.5" height="49.5"/>
                                                     <fontDescription key="fontDescription" name="KomikaHand" family="Komika Hand" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1021,16 +1053,16 @@
         </scene>
     </scenes>
     <resources>
-        <image name="chat" width="18" height="18"/>
-        <image name="defaultProfilePicture" width="75" height="75"/>
-        <image name="profile" width="18" height="18"/>
-        <image name="settings-cog" width="154.28572082519531" height="154.28572082519531"/>
-        <image name="team" width="18" height="18"/>
+        <image name="chat" width="24" height="24"/>
+        <image name="defaultProfilePicture" width="100" height="100"/>
+        <image name="profile" width="24" height="24"/>
+        <image name="settings-cog" width="30" height="30"/>
+        <image name="team" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="orW-Q1-t1O"/>
-        <segue reference="BY7-Nf-chc"/>
-        <segue reference="c4s-6R-ZGv"/>
+        <segue reference="seI-Af-4id"/>
+        <segue reference="4fk-Rn-ZWp"/>
         <segue reference="Mn0-RA-GHU"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -10,7 +10,6 @@ import UIKit
 
 class TitlePageViewController: UIViewController, DatabaseListener, UITextFieldDelegate {
     
-    
     // MARK: - Variables
     // Database related variables
     weak var databaseController: DatabaseProtocol?
@@ -98,12 +97,23 @@ class TitlePageViewController: UIViewController, DatabaseListener, UITextFieldDe
             
             let tabbarController = segue.destination as! UITabBarController
             
-            // Hides the back button so that the user cannot go back to the login page
-            tabbarController.navigationItem.setHidesBackButton(true, animated:true)
+            // REF: https://medium.com/@tjcarney89/implementing-a-custom-back-button-in-swift-39e4ab55c71
+            // Set the log out button
+            let logOutItem = UIBarButtonItem()
+            logOutItem.title = "Logout"
+            // Set to the cutom font
+            let customFont = UIFont(name: "Mali-SemiBold", size: 17.0)!
+            // Logout button - setting the color to black
+            logOutItem.setTitleTextAttributes([NSAttributedString.Key.font: customFont], for: .normal)
+            logOutItem.tintColor = UIColor.black
             
+            // Setting the back button
+            navigationItem.backBarButtonItem = logOutItem
+        
             // Set the user in the profile view
             let profile = tabbarController.viewControllers![2] as! ProfileViewController
             profile.loggedOnUser = self.loggedOnUser
+            profile.navigationItem.rightBarButtonItem = logOutItem
             
             // Set the user in the people view
             let people = tabbarController.viewControllers![0] as! PeopleViewController

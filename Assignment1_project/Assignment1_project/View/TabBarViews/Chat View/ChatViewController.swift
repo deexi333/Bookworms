@@ -109,7 +109,6 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
                             
                             // Add the conversation and the names as a tuple
                             allConversations.append((names, conversation))
-                            print((names, conversation))
                             filteredConversations.append((names, conversation))
                         }
                     }

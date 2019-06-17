@@ -293,9 +293,8 @@ class FirebaseController: NSObject, DatabaseProtocol {
             let userBio = change.document.data()["userBio"] as! String
             let userPassword = change.document.data()["userPassword"] as! String
             let userProfilePicture = change.document.data()["userProfilePicture"] as! String
-            //let userCameraAcceptance = change.document.data()["userCameraAcceptance"] as! String
-            let userCameraAcceptance = "false"
-            
+            let userCameraAcceptance = change.document.data()["userCameraAcceptance"] as! String
+          
             var userBooks: [String] = []
             
             for bookID in change.document.data()["userBooks"] as! [String] {
@@ -310,9 +309,9 @@ class FirebaseController: NSObject, DatabaseProtocol {
             
             var userConversations: [String] = []
             
-            //for conversationID in change.document.data()["userConversations"] as! [String] {
-              //  userConversations.append(conversationID)
-            //}
+            for conversationID in change.document.data()["userConversations"] as! [String] {
+                userConversations.append(conversationID)
+            }
             
             // ADD
             if change.type == .added {
