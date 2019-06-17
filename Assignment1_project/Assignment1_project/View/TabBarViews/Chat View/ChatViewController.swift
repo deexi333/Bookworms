@@ -185,6 +185,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         if segue.identifier == "showMessagesSegue" {
             let destination = segue.destination as! ShowChatViewController
             destination.currentConversation = self.filteredConversations[friendsTableView.indexPathForSelectedRow!.row].1
+            destination.loggedOnUser = self.loggedOnUser
         }
     }
     

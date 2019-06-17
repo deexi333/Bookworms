@@ -180,8 +180,8 @@
 			isa = PBXGroup;
 			children = (
 				C189CFCE229B47EB004FA81F /* FriendTableViewCell.swift */,
-				C189CFD0229B6CEA004FA81F /* ShowChatViewController.swift */,
 				C189CFD6229B8D8A004FA81F /* ChatMessageTableViewCell.swift */,
+				C189CFD0229B6CEA004FA81F /* ShowChatViewController.swift */,
 			);
 			path = "Friend Related";
 			sourceTree = "<group>";

@@ -126,7 +126,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             let documentRef = change.document.documentID
             let messageSender = change.document.data()["messageSender"] as! String
             let messageSent = change.document.data()["messageSent"] as! String
-            let messageTime = change.document.data()["messageTime"] as! Timestamp
+            let messageTime = change.document.data()["messageTime"] as! String
             var messageReceiver: [String] = []
             
             // Getting each user
@@ -138,7 +138,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
             if change.type == .added {
                 print("New Message: \(change.document.data())")
                 let newMessage = Message(messageID: documentRef, messageReceiver: messageReceiver, messageSender: messageSender, messageTime: messageTime, messageSent: messageSent)
-                // Adding the new message
+                // Adding the new messages
                 messageList.append(newMessage)
             }
             
@@ -642,7 +642,7 @@ class FirebaseController: NSObject, DatabaseProtocol {
     
     
     // adding a message
-    func addMessage(messageTime: Timestamp, messageReceiver: [String], messageSender: String, messageSent: String, conversationID: String) {
+    func addMessage(messageTime: String, messageReceiver: [String], messageSender: String, messageSent: String, conversationID: String) {
         let messageTime = messageTime
         let messageReceiver = messageReceiver
         let messageSender = messageSender

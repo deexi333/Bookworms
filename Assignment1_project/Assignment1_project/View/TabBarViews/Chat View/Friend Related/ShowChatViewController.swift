@@ -16,6 +16,8 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
     
     // The conversation that is currently taking place tracker
     var currentConversation: Conversation?
+    // The user that is logged on
+    var loggedOnUser: User?
     
     // All the users in the application
     var allUsers: [User] = []
@@ -47,10 +49,36 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
         chatTableView.reloadData()
     }
     
+    // MARK: - Send message
+    @IBAction func sendMessage(_ sender: Any) {
+        // REF: - https://stackoverflow.com/questions/46376823/ios-swift-get-the-current-local-time-and-date-timestamp/46390754
+        let now = Date()
+        let formatter = DateFormatter()
+        formatter.timeZone = TimeZone.current
+        formatter.dateFormat = "yyyy-MM-dd HH:mm"
+        let dateString = formatter.string(from: now)
+        
+        var messageReceivers: [String] = []
+        
+        for user in currentConversation!.conversationUsers! {
+            if user != loggedOnUser?.userEmail{
+                messageReceivers.append(user)
+            }
+        }
+        
+        databaseController?.addMessage(messageTime: dateString, messageReceiver: messageReceivers, messageSender: loggedOnUser!.userEmail, messageSent: messageTextField.text, conversationID: currentConversation!.conversationID!)
+    }
+    
     
     // MARK: - Listeners
     func onUserChange(change: DatabaseChange, users: [User]) {
         allUsers = users
+        
+        for user in users {
+            if user.userEmail == loggedOnUser?.userEmail {
+                loggedOnUser = user
+            }
+        }
     }
     
     func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {

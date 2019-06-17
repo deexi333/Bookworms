@@ -147,7 +147,7 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         // Putting the url in the user imformation
         imageRef.putData(data, metadata: metadata){ (meta, error) in
             if error != nil {
-                self.createCheckMessage(title: "Could not upload image to firebase", message: "Error")
+                self.displayMessage(title: "Could not upload image to firebase", message: "Error")
             }
             else {
                 imageRef.downloadURL { (url, error) in
@@ -179,6 +179,16 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func displayMessage(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        
+        // Create the cancel button
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: { (action) in
+            alert.dismiss(animated: true, completion: nil)
+        }))
+    }
+    
     
     func pickImage() {
         let imagePicker: UIImagePickerController = UIImagePickerController()

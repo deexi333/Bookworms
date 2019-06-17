@@ -15,9 +15,9 @@ class Message: NSObject {
     var messageReceiver: [String]?
     var messageSender: String?
     var messageSent: String?
-    var messageTime: Timestamp?
+    var messageTime: String?
     
-    init(messageID: String, messageReceiver: [String], messageSender: String, messageTime: Timestamp, messageSent: String) {
+    init(messageID: String, messageReceiver: [String], messageSender: String, messageTime: String, messageSent: String) {
         self.messageID = messageID
         self.messageReceiver = messageReceiver
         self.messageSender = messageSender

@@ -50,7 +50,7 @@ protocol DatabaseProtocol: AnyObject {
     
     // Chat functionality
     func addConversation(userEmail: String, friendEmail: String)
-    func addMessage(messageTime: Timestamp, messageReceiver: [String], messageSender: String, messageSent: String, conversationID: String)
+    func addMessage(messageTime: String, messageReceiver: [String], messageSender: String, messageSent: String, conversationID: String)
 
     // Listeners
     func addListener(listener: DatabaseListener)
