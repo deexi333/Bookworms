@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class PeopleViewController: UIViewController, DatabaseListener {
     
@@ -38,6 +39,10 @@ class PeopleViewController: UIViewController, DatabaseListener {
     // Listeners
     var listenerType = ListenerType.all
     
+    // References
+    var collectionReference = Firestore.firestore().collection("user")
+    var storageReference = Storage.storage()
+    
     
     // MARK: - Functions
     override func viewDidLoad() {
@@ -64,12 +69,14 @@ class PeopleViewController: UIViewController, DatabaseListener {
     func onUserChange(change: DatabaseChange, users: [User]) {
         allUsers = []
         
+        // get the currently logged in user
         for user in users {
             if user.userEmail == loggedOnUser!.userEmail {
                 loggedOnUser = user
             }
         }
         
+        // Get all the users that the user has
         for user in users {
             if user.userEmail != loggedOnUser?.userEmail {
                 
@@ -87,12 +94,13 @@ class PeopleViewController: UIViewController, DatabaseListener {
             }
         }
         
-        
+        // If there is onlyone user
         if users.count == 1 {
             errorView.isHidden = false
             profileView.isHidden = true
         }
-            
+        
+        // if there is noone else to add
         if allUsers?.count == 0 {
             errorView.isHidden = false
             profileView.isHidden = true
@@ -104,7 +112,27 @@ class PeopleViewController: UIViewController, DatabaseListener {
             
             // get the first user
             trackUser = allUsers![userTrack]
-            self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
+            
+            // Set the profile pciture
+            if trackUser?.userProfilePicture == "defaultProfilePicture" {
+                self.profilePicture.image = UIImage(named: trackUser!.userProfilePicture)
+            }
+                
+            // If the image is not the default one then assisng the URL from the user
+            else {
+                self.storageReference.reference(forURL: trackUser!.userProfilePicture).getData(maxSize: 5 * 1024 * 1024,
+                completion: { (data, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                    else {
+                        let image = UIImage(data: data!)
+                        // Assign image
+                        self.profilePicture.image = image
+                    }
+                }
+                )
+            }
             
             // Format the profile picture
             self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
@@ -160,7 +188,25 @@ class PeopleViewController: UIViewController, DatabaseListener {
         }
         
         trackUser = allUsers![userTrack]
-        self.profilePicture.image = UIImage(named: (trackUser?.userProfilePicture)!)
+        
+        if trackUser?.userProfilePicture == "defaultProfilePicture" {
+            self.profilePicture.image = UIImage(named: trackUser!.userProfilePicture)
+        }
+            
+            // If the image is not the default one then assisng the URL from the user
+        else {
+            self.storageReference.reference(forURL: trackUser!.userProfilePicture).getData(maxSize: 5 * 1024 * 1024,
+            completion: { (data, error) in
+            if let error = error {
+                print(error.localizedDescription)
+            }
+            else {
+                let image = UIImage(data: data!)
+                self.profilePicture.image = image
+            }
+            }
+            )
+        }
         
         // Format the profile picture
         self.profilePicture.layer.cornerRadius = self.profilePicture.frame.size.width / 2;
@@ -173,14 +219,14 @@ class PeopleViewController: UIViewController, DatabaseListener {
         self.bookView?.trackUser = trackUser
         self.bookView?.viewDidLoad()
         
+        self.viewDidLoad()
     }
     
     
     // Once the message button is pressed
     @IBAction func addFriendToUser(_ sender: Any) {
-        let _ = databaseController!.addFriendToUser(userEmail: loggedOnUser!.userEmail, friendEmail: trackUser!.userEmail)
-        let _ = databaseController!.addConversation(userEmail: loggedOnUser!.userEmail, friendEmail: trackUser!.userEmail)
-        let _ = self.tabBarController!.viewControllers![1] as! ChatViewController
+        let _ = self.databaseController!.addFriendToUser(userEmail: self.loggedOnUser!.userEmail, friendEmail: self.trackUser!.userEmail)
+        let _ = self.databaseController!.addConversation(userEmail: self.loggedOnUser!.userEmail, friendEmail: self.trackUser!.userEmail)
     }
     
     
@@ -223,6 +269,3 @@ class PeopleViewController: UIViewController, DatabaseListener {
         }
     }
 }
-
-
-

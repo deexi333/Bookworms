@@ -65,9 +65,9 @@ class DetailsSegementViewController: UIViewController, UITextViewDelegate, Datab
     
     // once the user touches outside of the bio text view
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
         // update the bio text in the database
         if selectView != "People" {
+            self.view.endEditing(true)
             databaseController!.updateUserBio(userBio: bioTextView.text, userEmail: (loggedOnUser?.userEmail)!)
         }
     }

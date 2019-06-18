@@ -71,12 +71,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
-        // Making the keyboard move up so that the bio text view is not blocked
-        // REF: https://stackoverflow.com/questions/50325019/moving-view-up-with-textfield-and-button-when-keyboard-appear-swift
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name:UIResponder.keyboardWillChangeFrameNotification, object: nil)
-        
         // Making sure the profile picture can be tapped
         profilePicture.isUserInteractionEnabled = true
         
@@ -99,20 +93,6 @@ class ProfileViewController: UIViewController, UIImagePickerControllerDelegate, 
             self.pickImage()
         }
        
-    }
-    
-    
-    // MARK: - Fixing the keyboard
-    @objc func keyboard(notification:Notification) {
-        guard let keyboardReact = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
-            return
-        }
-        
-        if notification.name == UIResponder.keyboardWillShowNotification ||  notification.name == UIResponder.keyboardWillChangeFrameNotification {
-            self.view.frame.origin.y = -keyboardReact.height
-        } else{
-            self.view.frame.origin.y = 0
-        }
     }
     
     

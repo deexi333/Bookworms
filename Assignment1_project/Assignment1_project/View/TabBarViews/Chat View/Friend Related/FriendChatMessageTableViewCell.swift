@@ -1,19 +1,19 @@
 //
-//  ChatMessageTableViewCell.swift
+//  FriendChatMessageTableViewCell.swift
 //  Assignment1_project
-//
+
 //  Created by ME on 27/5/19.
 //  Copyright © 2019 Monash University. All rights reserved.
 //
 
 import UIKit
 
-class ChatMessageTableViewCell: UITableViewCell {
+class FriendChatMessageTableViewCell: UITableViewCell {
 
     // MARK: - Variables
     // Element from the storyboard
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var friendNameLabel: UILabel!
+    @IBOutlet weak var friendMessageLabel: UILabel!
     
     
     // MARK: - Functions

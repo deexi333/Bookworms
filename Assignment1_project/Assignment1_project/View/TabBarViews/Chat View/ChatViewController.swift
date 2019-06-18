@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListener, UITableViewDelegate, UITableViewDataSource {
    
@@ -31,6 +32,10 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     // The filtered conversations of the names
     var filteredConversations: [(String, Conversation)] = []
     
+    // References in firebase
+    var collectionReference = Firestore.firestore().collection("user")
+    var storageReference = Storage.storage()
+    
     
     // MARK: - Functions
     override func viewDidLoad() {
@@ -54,6 +59,14 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         friendsTableView.reloadData()
     }
     
+    
+    // MARK: - Fixing the keyboard
+    // Return button makes the keyboard dissapear
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+
+    
     // MARK: - The view appear and disappear functions
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -75,6 +88,12 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     // MARK: - Database Protocols
     func onUserChange(change: DatabaseChange, users: [User]) {
         allUsers = users
+        
+        for user in users {
+            if user.userEmail == loggedOnUser?.userEmail {
+                loggedOnUser = user
+            }
+        }
     }
     
     func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {
@@ -82,36 +101,23 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         allConversations = []
         filteredConversations = []
         
-        // Interate through each user
-        for user in allUsers {
-            // If the user is the logged on user
-            if user.userEmail == loggedOnUser?.userEmail {
-                // Iterate throgugh the user conversations
-                for conversationID in user.userConversations {
-                    // Iterate through all the conversations
-                    for conversation in conversations {
-                        // if the conversationID is the id in the conversation
-                        if conversationID == conversation.conversationID {
-                            // String consisting of the names
-                            var names: String = ""
-                            
-                            // Iterate through the conversation emails
-                            for email in conversation.conversationUsers! {
-                                // Iterate through all the users
-                                for user in allUsers {
-                                    // If the email is not the logged in user and if the user email is the email in the conversation
-                                    if  email != loggedOnUser?.userEmail && user.userEmail == email {
-                                        // Append the names together
-                                        names = names + "\(user.userFirstName)" + "\(user.userLastName)" + ", "
-                                    }
-                                }
+        // For each conversation in the logged on user
+        for conversationID in (loggedOnUser?.userConversations)! {
+            // iterate through the conversations
+            for conversation in conversations {
+                if conversation.conversationID == conversationID {
+                    var names: String = ""
+                    
+                    for email in conversation.conversationUsers! {
+                        for user in allUsers {
+                            if email != loggedOnUser?.userEmail && user.userEmail == email {
+                                names = names + "\(user.userFirstName)" + " \(user.userLastName)"
                             }
-                            
-                            // Add the conversation and the names as a tuple
-                            allConversations.append((names, conversation))
-                            filteredConversations.append((names, conversation))
                         }
                     }
+                    // Add the conversation and the names as a tuple
+                    allConversations.append((names, conversation))
+                    filteredConversations.append((names, conversation))
                 }
             }
         }
@@ -132,7 +138,7 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     // Search Functionality
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        // If the search textis not emptythen get allBooks
+        // If the search text is not empty then get allBooks
         filteredConversations = searchText.isEmpty ? allConversations : allConversations.filter({(dataString: (String, Conversation)) -> Bool in
             // return the entries that have the same name as the search text
             return dataString.0.range(of: searchText, options: .caseInsensitive) != nil
@@ -149,18 +155,31 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == SECTION_FRIENDS {
-            return filteredConversations.count
-        }
-        else {
-            return 1
-        }
+        return filteredConversations.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let friendCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIEND, for: indexPath) as! FriendTableViewCell
         friendCell.friendUserName.text = filteredConversations[indexPath.row].0
-        friendCell.friendProfileImage.image = UIImage(named: "defaultProfilePicture")
+        
+        if loggedOnUser?.userProfilePicture == "defaultProfilePicture" {
+            friendCell.friendProfileImage.image = UIImage(named: "defaultProfilePicture")
+        }
+            
+        // If the image is not the default one then assisng the URL from the user
+        else {
+            self.storageReference.reference(forURL: loggedOnUser!.userProfilePicture).getData(maxSize: 5 * 1024 * 1024, completion: { (data, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                    else {
+                        let image = UIImage(data: data!)
+                        friendCell.friendProfileImage.image = image
+                    }
+            }
+            )
+        }
+    
         friendCell.friendProfileImage.layer.cornerRadius = friendCell.friendProfileImage.frame.size.width / 2;
         friendCell.friendProfileImage.clipsToBounds = true;
         friendCell.friendProfileImage.layer.borderWidth = 1;
@@ -184,6 +203,20 @@ class ChatViewController: UIViewController, UISearchBarDelegate, DatabaseListene
         // Pass the selected object to the new view controller.
         if segue.identifier == "showMessagesSegue" {
             let destination = segue.destination as! ShowChatViewController
+            
+            // REF: https://medium.com/@tjcarney89/implementing-a-custom-back-button-in-swift-39e4ab55c71
+            // Set the log out button
+            let logOutItem = UIBarButtonItem()
+            logOutItem.title = "Back"
+            // Set to the cutom font
+            let customFont = UIFont(name: "Mali-SemiBold", size: 17.0)!
+            // Logout button - setting the color to black
+            logOutItem.setTitleTextAttributes([NSAttributedString.Key.font: customFont], for: .normal)
+            logOutItem.tintColor = UIColor.black
+            
+            // Setting the back button
+            navigationItem.backBarButtonItem = logOutItem
+            
             destination.currentConversation = self.filteredConversations[friendsTableView.indexPathForSelectedRow!.row].1
             destination.loggedOnUser = self.loggedOnUser
         }

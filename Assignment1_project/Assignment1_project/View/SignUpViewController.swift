@@ -101,36 +101,20 @@ class SignUpViewController: UIViewController, UITextFieldDelegate, DatabaseListe
     
     // MARK: - Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "signUpSegue" {
-            let tabbarController = segue.destination as! UITabBarController
+        if segue.identifier == "tutorialSignUpSegue" {
+            let tutorialView = segue.destination as! TutorialViewController
+            tutorialView.loggedOnUser = loggedOnUser
             
             // REF: https://medium.com/@tjcarney89/implementing-a-custom-back-button-in-swift-39e4ab55c71
             // Set the log out button
-            let logOutItem = UIBarButtonItem()
-            logOutItem.title = "Logout"
+            let backItem = UIBarButtonItem()
+            backItem.title = "Logout"
             // Set to the cutom font
             let customFont = UIFont(name: "Mali-SemiBold", size: 17.0)!
-            // Logout button - setting the color to black
-            logOutItem.setTitleTextAttributes([NSAttributedString.Key.font: customFont], for: .normal)
-            logOutItem.tintColor = UIColor.black
+            backItem.setTitleTextAttributes([NSAttributedString.Key.font: customFont], for: .normal)
             
             // Setting the back button
-            navigationItem.backBarButtonItem = logOutItem
-            
-            // Set the user in the profile view
-            let profile = tabbarController.viewControllers![2] as! ProfileViewController
-            profile.loggedOnUser = self.loggedOnUser
-            
-            // Set the user in the people view
-            let people = tabbarController.viewControllers![0] as! PeopleViewController
-            people.loggedOnUser = self.loggedOnUser
-            
-            // Set the user in the chat view
-            let chat = tabbarController.viewControllers![1] as! ChatViewController
-            chat.loggedOnUser = self.loggedOnUser
-            
-            // Set the tabbar to the people view
-            tabbarController.selectedIndex = 2
+            navigationItem.backBarButtonItem = backItem
         }
     }
     

@@ -111,6 +111,7 @@ class BookDetailViewController: UIViewController, DatabaseListener {
     // MARK: - Functions from the Storyboard
     @IBAction func addBookAction(_ sender: Any) {
         databaseController!.addBookToUser(userEmail: loggedOnUser!.userEmail, bookID: currentBook!.bookID!)
+        let _ = self.navigationController?.popViewController(animated: true)
     }
     
     

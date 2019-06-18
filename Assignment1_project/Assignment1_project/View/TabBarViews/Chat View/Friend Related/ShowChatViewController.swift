@@ -38,7 +38,7 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Swt up the database controller
+        // Set up the database controller
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         databaseController = appDelegate.databaseController
         
@@ -47,7 +47,34 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
         chatTableView.delegate  = self
         chatTableView.dataSource = self
         chatTableView.reloadData()
+        
+        // Making the keyboard move up so that the bio text view is not blocked
+        // REF: https://stackoverflow.com/questions/50325019/moving-view-up-with-textfield-and-button-when-keyboard-appear-swift
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboard(notification:)), name:UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
+    
+    
+    // MARK: - Fixing the keyboard
+    // When the user touches outside the keyboard the keyboard resigns down
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
+    // making the keyboard move up
+    @objc func keyboard(notification:Notification) {
+        guard let keyboardReact = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else{
+            return
+        }
+        
+        if notification.name == UIResponder.keyboardWillShowNotification ||  notification.name == UIResponder.keyboardWillChangeFrameNotification {
+            self.view.frame.origin.y = -keyboardReact.height
+        } else{
+            self.view.frame.origin.y = 0
+        }
+    }
+    
     
     // MARK: - Send message
     @IBAction func sendMessage(_ sender: Any) {
@@ -67,6 +94,8 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
         }
         
         databaseController?.addMessage(messageTime: dateString, messageReceiver: messageReceivers, messageSender: loggedOnUser!.userEmail, messageSent: messageTextField.text, conversationID: currentConversation!.conversationID!)
+        
+        self.messageTextField.text = ""
     }
     
     
@@ -83,29 +112,32 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
     
     func onConversationChange(change: DatabaseChange, conversations: [Conversation]) {
         allConversations = conversations
+        
+        // iterate through the conversations
+        for conversation in conversations {
+            if currentConversation?.conversationID == conversation.conversationID {
+                currentConversation = conversation
+            }
+        }
     }
     
     func onMessageChange(change: DatabaseChange, messages: [Message]) {
         // All the messages in a given conversation
         allMessages = []
         
-        // Iterate through all the conversations
-        for conversation in allConversations {
-            // If the conversationID's match
-            if conversation.conversationID == currentConversation?.conversationID {
-                // Iterate through the messages
-                for message in messages {
-                    // Iterate through the messageID conversations
-                    for messageID in conversation.conversationMessages! {
-                        // If the messageID's match
-                        if message.messageID == messageID {
-                            // Append the message
-                            allMessages.append(message)
-                        }
-                    }
+        // Iterate through the messages
+        for message in messages {
+            // Iterate through the messageID conversations
+            for messageID in currentConversation!.conversationMessages! {
+                // If the messageID's match
+                if message.messageID == messageID {
+                    // Append the message
+                    allMessages.append(message)
                 }
             }
         }
+        
+        self.chatTableView.reloadData()
     }
     
     func onBookChange(change: DatabaseChange, books: [Book]) { }
@@ -133,32 +165,54 @@ class ShowChatViewController: UIViewController, DatabaseListener, UITableViewDel
     
     // MARK: - Table View
     // Variables
-    let SECTION_MESSAGE = 0
-    let CELL_MESSAGE = "chatMessageCell"
+    let SECTION_FRIENDMESSAGE = 0
+    let CELL_FRIENDMESSAGE = "friendChatMessageCell"
     
     // Functions
     func numberOfSections(in tableView: UITableView) -> Int {
-        // there is one section therefore return 1
+        // there are two sections therefore return 2
         return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == SECTION_MESSAGE {
-            return allMessages.count
-        }
-        else {
-            return 1
-        }
+        return allMessages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let messageCell = tableView.dequeueReusableCell(withIdentifier: CELL_MESSAGE, for: indexPath) as! ChatMessageTableViewCell
-        let message = allMessages[indexPath.row]
+        if allMessages.count > 0 {
+            if indexPath.section == SECTION_FRIENDMESSAGE {
+                let messageCell = tableView.dequeueReusableCell(withIdentifier: CELL_FRIENDMESSAGE, for: indexPath) as! FriendChatMessageTableViewCell
+                let message = allMessages[indexPath.row]
+                
+                // get the current user
+                var friend: User?
+                
+                for user in allUsers {
+                    if user.userEmail == message.messageSender {
+                        friend = user
+                    }
+                }
+                
+                // align to the right if it is the user
+                if message.messageSender == loggedOnUser?.userEmail {
+                    messageCell.friendMessageLabel.textAlignment = .right
+                    messageCell.friendNameLabel.textAlignment = .right
+                }
+                
+                // align to the left if it a friend
+                else {
+                    messageCell.friendMessageLabel.textAlignment = .left
+                    messageCell.friendNameLabel.textAlignment = .left
+                }
+                
+                messageCell.friendNameLabel.text = friend!.userFirstName + " " + friend!.userLastName
+                messageCell.friendMessageLabel.text = message.messageSent
+                
+                return messageCell
+            }
+        }
         
-        messageCell.messageLabel.text = "\(message.messageSent)"
-        messageCell.nameLabel.text = "\(message.messageSender)"
-        
-        return messageCell
+        return UITableViewCell()
     }
     
 

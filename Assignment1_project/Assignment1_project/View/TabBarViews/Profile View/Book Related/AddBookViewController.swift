@@ -96,6 +96,8 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
                 }
             }
         }
+        
+        self.loadData()
     }
     
     func onGenreChange(change: DatabaseChange, genres: [Genre]) { }
@@ -176,10 +178,10 @@ class AddBookViewController: UIViewController, UISearchBarDelegate, DatabaseList
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addBookDetailsSegue" {
             let destination = segue.destination as! BookDetailViewController
+        
             destination.addBook = true
             destination.currentBook = self.filteredBooks[allBooksTableView.indexPathForSelectedRow!.row]
             destination.loggedOnUser = self.loggedOnUser
         }
     }
-
 }

@@ -4,7 +4,7 @@
 //
 //  Created by ME on 21/5/19.
 //  Copyright © 2019 Monash University. All rights reserved.
-//
+
 
 import UIKit
 
@@ -44,6 +44,7 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         
         // Search
         searchBar.delegate = self
+        
         // Sets this view controller as presenting view controller for the search interface
         definesPresentationContext = true
         
@@ -54,6 +55,13 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         bookTableView.reloadData()
     }
     
+    
+    // MARK: - Fixing the keyboard
+    // Return button makes the keyboard dissapear
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+
     
     // MARK: - Database Protocols
     func onUserChange(change: DatabaseChange, users: [User]) {
@@ -91,7 +99,7 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
         }
             
         else {
-            for bookID in loggedOnUser!.userBooks {
+            for bookID in trackUser!.userBooks {
                 for book in books {
                     if bookID == book.bookID {
                         allBooks.append(book)
@@ -127,8 +135,8 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     
     // MARK: - TableView
     // Variables
-    let SECTION_ADDBOOK = 0
-    let SECTION_BOOKS = 1
+    var SECTION_ADDBOOK = 0
+    var SECTION_BOOKS = 1
     let CELL_ADDBOOK = "addBook"
     let CELL_BOOK = "book"
     
@@ -150,56 +158,80 @@ class BookSegmentViewController: UIViewController, UISearchBarDelegate, Database
     // MARK: - Table view data source
     func numberOfSections(in tableView: UITableView) -> Int {
         // there are two sections therefore return 2
-        
+        // However when the view is for people there is only 1
         if selectView == "People" {
-            return 2
-        }
+            SECTION_BOOKS = 0
+            SECTION_ADDBOOK = 1
+            return 1
             
+        }
         else {
+            SECTION_ADDBOOK = 0
+            SECTION_BOOKS = 1
             return 2
         }
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == SECTION_BOOKS
-        {
-            return filteredBooks.count
-        } else {
-            return 1
+        if selectView == "People" {
+            if section == SECTION_BOOKS {
+                return filteredBooks.count
+            }
+            else {
+                return 0
+            }
+        }
+        
+        else {
+            if section == SECTION_BOOKS
+            {
+                return filteredBooks.count
+            }
+            else {
+                return 1
+            }
         }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
-        if indexPath.section == SECTION_ADDBOOK {
+        if indexPath.section == SECTION_BOOKS {
             // gets the count for the tasks and puts it in a new cell
             // this will then be displayed in the countCell row
+            let bookCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOK, for: indexPath) as! BookTableViewCell
+            let book = filteredBooks[indexPath.row]
+            
+            bookCell.bookNameLabel.text = book.bookName
+            
+            return bookCell
+        }
+        
+        else {
             let addBookCell = tableView.dequeueReusableCell(withIdentifier: CELL_ADDBOOK, for: indexPath)
             return addBookCell
         }
-        
-        let bookCell = tableView.dequeueReusableCell(withIdentifier: CELL_BOOK, for: indexPath) as! BookTableViewCell
-        let book = filteredBooks[indexPath.row]
-        
-        bookCell.bookNameLabel.text = book.bookName
-        
-        return bookCell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if selectView != "People" {
             if editingStyle == .delete && indexPath.section == SECTION_BOOKS {
                 databaseController!.deleteBook(book: filteredBooks[indexPath.row], user: loggedOnUser!)
+                self.bookTableView.reloadData()
             }
         }
     }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // checks whether or not the row is a task
-        if indexPath.section == SECTION_BOOKS {
-            return true
+        if selectView != "People" {
+            // checks whether or not the row is a task
+            if indexPath.section == SECTION_BOOKS {
+                return true
+            }
+            return false
         }
-        return false
+        else {
+            return false
+        }
     }
     
     
